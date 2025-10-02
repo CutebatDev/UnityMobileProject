@@ -14,10 +14,10 @@ namespace _Scripts
 
         private void Update()
         {
-            OnMove?.Invoke(_input.x, _input.y); // now Movement runs every frame
+            OnMove?.Invoke(_input.x, _input.y);
         }
 
-        public void OnDrag(PointerEventData eventData)
+        public void OnDrag(PointerEventData eventData) // this was made with AI
         {
             Vector2 pos;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
