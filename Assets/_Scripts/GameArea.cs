@@ -59,7 +59,7 @@ public class GameArea : MonoBehaviour
     public Vector3 GetSpawnPosition(SpawnLayer layer)
     {
         float x = 0;
-        float y = terrainPos.position.y;
+        float y = terrainPos.position.y + 0.5f;
         float z = 0;
         switch (Random.Range(0, 4))
         {
