@@ -5,11 +5,30 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private LevelParameters levelParams;
+    private GameArea _gameArea;
+    private int _layerIndex;
 
     private void Update()
     {
         MovementToPlayer();
     }
+
+    public void Initialize(SpawnManager owner, GameArea gameArea, int layerIndex)
+    {
+        _gameArea = gameArea;
+        _layerIndex = layerIndex;
+    }
+
+    /*void FixedUpdate()
+    {
+        transform.Translate(Vector3.back * (Time.deltaTime * levelParams.enemySpeed));
+
+        if (_gameArea != null &&
+            _gameArea.IsOutOfBounds(transform.position, _gameArea.layers[_layerIndex]))
+        {
+            gameObject.SetActive(false);
+        }
+    }*/
 
     private void MovementToPlayer()
     {

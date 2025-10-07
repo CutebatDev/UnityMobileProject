@@ -9,18 +9,10 @@ namespace _Scripts
     {
         [SerializeField] private LevelParameters levelParams;
         [SerializeField] private Transform playerTransform;
-        private void OnEnable() => InputHandler.OnMove += Movement;
-        private void OnDisable() => InputHandler.OnMove -= Movement;
 
         private void Start()
         {
             StartCoroutine(CheckBounds());
-        }
-
-        private void Movement(float horizontal = 0f, float vertical = 0f)
-        {
-            Vector3 dir = new Vector3(-horizontal, 0f, -vertical); // top down reversed movement
-            transform.position += dir * (levelParams.playerSpeed * Time.deltaTime);
         }
 
         private IEnumerator CheckBounds()
