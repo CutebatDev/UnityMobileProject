@@ -21,6 +21,11 @@ public class GameArea : MonoBehaviour
     public SpawnLayer[] layers;
     [SerializeField] private Transform terrainPos;
 
+    [SerializeField] private float leftBorder = 0;
+    [SerializeField] private float bottomBorder = 0;
+    [SerializeField] private float rightBorder = 1;
+    [SerializeField] private float topBorder = 1;
+
     void Start()
     {
         RecalculateAllLayers();
@@ -42,8 +47,10 @@ public class GameArea : MonoBehaviour
 
     void RecalculateLayerBounds(SpawnLayer layer)
     {
-        Vector3 bottomLeft = camera.ViewportToWorldPoint(new Vector3(0, 0, layer.distanceToCamera));
-        Vector3 topRight = camera.ViewportToWorldPoint(new Vector3(1, 1, layer.distanceToCamera));
+        Vector3 bottomLeft =
+            camera.ViewportToWorldPoint(new Vector3(leftBorder, bottomBorder, camera.transform.position.y));
+        Vector3 topRight =
+            camera.ViewportToWorldPoint(new Vector3(rightBorder, topBorder, camera.transform.position.y));
 
         layer.minBounds = new Vector3(bottomLeft.x, bottomLeft.z, bottomLeft.y);
         layer.maxBounds = new Vector3(topRight.x, topRight.z, topRight.y);
@@ -54,7 +61,7 @@ public class GameArea : MonoBehaviour
         float x = 0;
         float y = terrainPos.position.y;
         float z = 0;
-        switch (Random.Range(2, 4))
+        switch (Random.Range(0, 4))
         {
             case 0: // top
                 x = Random.Range(layer.minBounds.x, layer.maxBounds.x);

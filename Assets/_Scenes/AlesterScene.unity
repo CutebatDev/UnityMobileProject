@@ -1714,9 +1714,13 @@ MonoBehaviour:
   - name: Enemy
     distanceToCamera: 50
     padding: 0
-    minBounds: {x: -62.456383, y: -28.86753, z: 1}
-    maxBounds: {x: 62.456398, y: 28.867525, z: 0.99998856}
+    minBounds: {x: -63.081173, y: -58.31262, z: 0}
+    maxBounds: {x: 63.08118, y: 58.312603, z: -0.0000076293945}
   terrainPos: {fileID: 1142766304}
+  leftBorder: 0.25
+  bottomBorder: 0
+  rightBorder: 0.75
+  topBorder: 1
 --- !u!1001 &1396423432910762513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1803,7 +1807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9074383490454170008, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7522766023754518908, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
