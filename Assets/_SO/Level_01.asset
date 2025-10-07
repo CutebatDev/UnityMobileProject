@@ -15,3 +15,5 @@ MonoBehaviour:
   playerSpeed: 5
   playerHealth: 0
   playerDamage: 0
+  enemySpeed: 2
+  worldBounds: 0a000000000000000a000000
