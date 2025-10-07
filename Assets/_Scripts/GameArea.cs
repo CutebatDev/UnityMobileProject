@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
+[System.Serializable]
 public class SpawnLayer
 {
     public string name = "Default";
@@ -16,18 +19,15 @@ public class GameArea : MonoBehaviour
 {
     public Camera camera;
     public SpawnLayer[] layers;
+    [SerializeField] private Transform terrainPos;
 
     void Start()
     {
-        if (camera == null)
-            camera = Camera.main;
-
         RecalculateAllLayers();
     }
 
     void OnValidate()
     {
-        if (camera == null) camera = Camera.main;
         if (layers != null && layers.Length > 0)
             RecalculateAllLayers();
     }
@@ -49,11 +49,31 @@ public class GameArea : MonoBehaviour
         layer.maxBounds = new Vector3(topRight.x, topRight.z, topRight.y);
     }
 
-    public Vector3 GetSpawnPositionFromTop(SpawnLayer layer)
+    public Vector3 GetSpawnPosition(SpawnLayer layer)
     {
-        float x = Random.Range(layer.minBounds.x, layer.maxBounds.x);
-        float y = camera.transform.position.y - layer.distanceToCamera;
-        float z = layer.maxBounds.y + layer.padding;
+        float x = 0;
+        float y = terrainPos.position.y;
+        float z = 0;
+        switch (Random.Range(2, 4))
+        {
+            case 0: // top
+                x = Random.Range(layer.minBounds.x, layer.maxBounds.x);
+                z = layer.maxBounds.y + layer.padding;
+                break;
+            case 1: // bottom
+                x = Random.Range(layer.minBounds.x, layer.maxBounds.x);
+                z = layer.minBounds.y - layer.padding;
+                break;
+            case 2: // right
+                x = layer.maxBounds.y + layer.padding;
+                z = Random.Range(layer.minBounds.x, layer.maxBounds.x);
+                break;
+            case 3: // left
+                x = layer.minBounds.y - layer.padding;
+                z = Random.Range(layer.minBounds.x, layer.maxBounds.x);
+                break;
+        }
+
         return new Vector3(x, y, z);
     }
 

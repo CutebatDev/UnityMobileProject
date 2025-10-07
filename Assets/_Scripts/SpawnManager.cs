@@ -24,7 +24,7 @@ namespace _Scripts
 
                 foreach (var prefab in prefabs)
                 {
-                    Vector3 spawnPos = gameArea.GetSpawnPositionFromTop(layer);
+                    Vector3 spawnPos = gameArea.GetSpawnPosition(layer);
                     var obj = poolManager.GetFromPool(prefab, this, gameArea, layerIndex);
 
                     obj.transform.position = spawnPos;
