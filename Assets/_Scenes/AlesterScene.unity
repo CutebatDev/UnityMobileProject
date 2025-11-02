@@ -502,6 +502,54 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &439723481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 439723483}
+  - component: {fileID: 439723482}
+  m_Layer: 0
+  m_Name: OrientationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &439723482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439723481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27fc9f499c39374eb79a84e938a0670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCamera: {fileID: 1396423432910762514}
+  gameArea: {fileID: 2033507106}
+  portraitSize: 5
+  landscapeSize: 7
+--- !u!4 &439723483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439723481}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 61.538906, y: 0.5, z: -81.68776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &540186115
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 5909804849905570553, guid: a3e1449bdb6bafa4d8e16193b6e7866b, type: 3}
+  - {fileID: 3069850510742832819, guid: a165537a718b1ab43a0b499f5f3a03fe, type: 3}
   gameArea: {fileID: 2033507106}
   poolManager: {fileID: 1607740259}
   spawnTimer: 1
@@ -1714,13 +1762,17 @@ MonoBehaviour:
   - name: Enemy
     distanceToCamera: 50
     padding: 0
-    minBounds: {x: -63.081173, y: -58.31262, z: 0}
-    maxBounds: {x: 63.08118, y: 58.312603, z: -0.0000076293945}
+    originalPadding: 0
+    minBounds: {x: -21.867233, y: -58.31262, z: 0}
+    maxBounds: {x: 21.867235, y: 58.312603, z: -0.0000076293945}
   terrainPos: {fileID: 1142766304}
   leftBorder: 0.25
   bottomBorder: 0
   rightBorder: 0.75
   topBorder: 1
+  adaptToOrientation: 1
+  portraitPaddingMultiplier: 1
+  landscapePaddingMultiplier: 1.5
 --- !u!1001 &1396423432910762513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1748,6 +1800,10 @@ PrefabInstance:
     - target: {fileID: 2236658373153131485, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
       propertyPath: m_projectionMatrixMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3434420847266796436, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4353719154565483570, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
       propertyPath: m_CameraType
@@ -1846,6 +1902,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2033507106}
   m_SourcePrefab: {fileID: 100100000, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
+--- !u!20 &1396423432910762514 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2407955181353997552, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
+  m_PrefabInstance: {fileID: 1396423432910762513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3084704456661454903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1929,3 +1990,4 @@ SceneRoots:
   - {fileID: 1396423432910762513}
   - {fileID: 3084704456661454903}
   - {fileID: 939799805}
+  - {fileID: 439723483}
