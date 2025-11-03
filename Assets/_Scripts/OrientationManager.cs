@@ -31,10 +31,29 @@ namespace _Scripts
             Debug.Log($"OrientationManager initialized - {Screen.width}x{Screen.height}, Landscape: {wasLandscape}");
             
             AdjustCameraForOrientation();
+            
+            // Subscribe to settings changes
+            if (SettingsManager.Instance != null)
+            {
+                SettingsManager.Instance.OnOrientationAdaptationChanged += OnOrientationSettingChanged;
+            }
+        }
+
+        void OnDestroy()
+        {
+            // Unsubscribe from settings changes
+            if (SettingsManager.Instance != null)
+            {
+                SettingsManager.Instance.OnOrientationAdaptationChanged -= OnOrientationSettingChanged;
+            }
         }
         
         void Update()
         {
+            // Check if orientation adaptation is enabled
+            if (SettingsManager.Instance != null && !SettingsManager.Instance.CurrentSettings.orientationAdaptationEnabled)
+                return;
+
             // Check if screen dimensions changed
             bool dimensionsChanged = Screen.width != lastScreenWidth || Screen.height != lastScreenHeight;
             bool currentlyLandscape = IsCurrentlyLandscape();
@@ -48,6 +67,15 @@ namespace _Scripts
                 lastScreenHeight = Screen.height;
                 wasLandscape = currentlyLandscape;
                 
+                AdjustCameraForOrientation();
+            }
+        }
+
+        private void OnOrientationSettingChanged(bool enabled)
+        {
+            if (enabled)
+            {
+                // Re-adjust camera when orientation adaptation is turned back on
                 AdjustCameraForOrientation();
             }
         }

@@ -14,7 +14,11 @@ namespace _Scripts
 
         private void Update()
         {
-            OnMove?.Invoke(_input.x, _input.y);
+            // Apply sensitivity before sending the input
+            Vector2 sensitizedInput = _input;
+            ApplyJoystickSensitivity(ref sensitizedInput);
+            
+            OnMove?.Invoke(sensitizedInput.x, sensitizedInput.y);
         }
 
         public void OnDrag(PointerEventData eventData) // this was made with AI
@@ -38,6 +42,15 @@ namespace _Scripts
             _input = Vector2.zero;
             handle.anchoredPosition = Vector2.zero;
             OnMove?.Invoke(0, 0);
+        }
+        
+        private void ApplyJoystickSensitivity(ref Vector2 input)
+        {
+            if (SettingsManager.Instance?.CurrentSettings != null)
+            {
+                float sensitivity = SettingsManager.Instance.CurrentSettings.joystickSensitivity;
+                input *= sensitivity;
+            }
         }
     }
 }
