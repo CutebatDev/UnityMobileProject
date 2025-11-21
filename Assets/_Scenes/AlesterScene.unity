@@ -791,7 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 3069850510742832819, guid: a165537a718b1ab43a0b499f5f3a03fe, type: 3}
+  - {fileID: 5909804849905570553, guid: a3e1449bdb6bafa4d8e16193b6e7866b, type: 3}
   gameArea: {fileID: 2033507106}
   poolManager: {fileID: 1607740259}
   spawnTimer: 1
@@ -1894,6 +1894,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6141204933263658557, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141204933263658557, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7248714854128799157, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}

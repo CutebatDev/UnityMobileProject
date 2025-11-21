@@ -1,6 +1,7 @@
 using System;
 using _Scripts;
 using UnityEngine;
+using Random = System.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LevelParameters levelParams;
     private GameArea _gameArea;
     private int _layerIndex;
+    [SerializeField] private GameObject mesh;
 
 
 	// SO PARAMS
@@ -30,6 +32,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        if (Preset == null)
+            Preset = Resources.Load<SO_EnemyPreset>("SO_EnemyPreset_NormalEnemy");
         speed = Preset.speed;
         health = Preset.health;
         damage = Preset.damage;
@@ -42,6 +46,7 @@ public class Enemy : MonoBehaviour
     {
         _gameArea = gameArea;
         _layerIndex = layerIndex;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void FixedUpdate()
@@ -60,5 +65,6 @@ public class Enemy : MonoBehaviour
         Vector3 dir = (player.position - transform.position).normalized;
         dir.y = 0; // keep y axis unchanged
         transform.Translate(dir * (levelParams.enemySpeed * Time.deltaTime));
+        mesh.transform.LookAt(player);
     }
 }
