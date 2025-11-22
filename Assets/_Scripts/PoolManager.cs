@@ -53,5 +53,10 @@ namespace _Scripts
                 init.OnSpawned(owner, area, layerIndex);
             return obj;
         }
+
+        public GameObject ReturnToPool(GameObject prefab, SpawnManager owner, GameArea area, int layerIndex)
+        {
+            
+        }
     }
 }

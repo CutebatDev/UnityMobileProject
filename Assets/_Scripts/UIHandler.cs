@@ -10,6 +10,8 @@ namespace _Scripts
         [SerializeField] private GameObject canvasPauseMenu;
         [SerializeField] private GameObject settingsPanelPrefab; // Assign in inspector
         private GameObject currentSettingsPanel;
+        public event Action OnSaveGame;
+        public event Action OnLoadGame;
 
         private void Start()
         {
@@ -44,7 +46,7 @@ namespace _Scripts
             canvasPauseMenu.SetActive(true);
             Time.timeScale = 0f;
         }
-        
+
         private void OpenSettings()
         {
             if (currentSettingsPanel == null && settingsPanelPrefab != null)
@@ -52,7 +54,7 @@ namespace _Scripts
                 // Instantiate under the "Canvases" parent (same level as UIHandler)
                 // This will make it a sibling to the pause canvas
                 currentSettingsPanel = Instantiate(settingsPanelPrefab, transform.parent);
-                
+
                 // Get the SettingsUI component and activate it
                 SettingsUI settingsUI = currentSettingsPanel.GetComponent<SettingsUI>();
                 if (settingsUI != null)
@@ -64,6 +66,16 @@ namespace _Scripts
             {
                 currentSettingsPanel.SetActive(true);
             }
+        }
+
+        public void SaveButton()
+        {
+            OnSaveGame?.Invoke();
+        }
+
+        public void LoadButton()
+        {
+            OnLoadGame?.Invoke();
         }
     }
 }
