@@ -22,20 +22,20 @@ public class Enemy : MonoBehaviour
     public float speed = 1;
     
     [HideInInspector]
-    public float health = 10;
-    
-    [HideInInspector]
     public float damage = 2;
 
+    private HealthManager healthManager;
+    
     #endregion
 
 
     private void Awake()
     {
+        healthManager = GetComponent<HealthManager>();
         if (Preset == null)
             Preset = Resources.Load<SO_EnemyPreset>("SO_EnemyPreset_NormalEnemy");
         speed = Preset.speed;
-        health = Preset.health;
+        healthManager.currentHealth = Preset.health;
         damage = Preset.damage;
         transform.localScale *=  Preset.sizeModifier;
     }
@@ -67,4 +67,5 @@ public class Enemy : MonoBehaviour
         transform.Translate(dir * (levelParams.enemySpeed * Time.deltaTime));
         mesh.transform.LookAt(player);
     }
+    
 }
