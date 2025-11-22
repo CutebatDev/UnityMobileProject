@@ -1,8 +1,13 @@
 {
   "World": {
-    "WorldPositionX": -3.21886063,
+    "WorldPositionX": 0.0,
     "WorldPositionY": 0.0,
-    "WorldPositionZ": -4.47063255
+    "WorldPositionZ": 0.0
   },
-  "Enemies": []
+  "Enemies": [],
+  "EnemyPoolManager": {
+    "PoolPositionX": 0.0,
+    "PoolPositionY": 0.0,
+    "PoolPositionZ": 0.0
+  }
 }

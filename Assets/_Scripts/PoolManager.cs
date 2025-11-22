@@ -6,57 +6,125 @@ namespace _Scripts
 {
     public class PoolManager : MonoBehaviour
     {
-        private GameObject[] prefabs;
-        [SerializeField] SpawnManager[] spawnManagers;
-        private Dictionary<GameObject, List<GameObject>> _pools = new();
+        [SerializeField] private SpawnManager[] spawnManagers;
         [SerializeField] private bool isPreWarm;
         [SerializeField] private int initialAmount = 1;
 
-        void Awake()
+        private GameObject[] _prefabs;
+        private readonly Dictionary<GameObject, List<GameObject>> _pools = new();
+        private readonly Dictionary<GameObject, List<GameObject>> _inactivePools = new();
+
+        private void Awake()
         {
-            prefabs = spawnManagers.SelectMany(sm => sm.GetPrefab()).Distinct().ToArray();
-            foreach (var prefab in prefabs)
+            _prefabs = spawnManagers.SelectMany(sm => sm.GetPrefab()).Distinct().ToArray();
+
+            foreach (var prefab in _prefabs)
             {
                 _pools[prefab] = new List<GameObject>();
-                if (isPreWarm)
+
+                if (!isPreWarm) continue;
+
+                for (int i = 0; i < initialAmount; i++)
                 {
-                    for (int i = 0; i < initialAmount; i++)
-                    {
-                        var obj = Instantiate(prefab, transform);
-                        obj.SetActive(false);
-                        _pools[prefab].Add(obj);
-                    }
+                    CreateNewObjectInPool(prefab);
                 }
             }
         }
 
         public GameObject GetFromPool(GameObject prefab, SpawnManager owner, GameArea area, int layerIndex)
         {
-            GameObject obj = null;
-            foreach (var objectInPool in _pools[prefab])
+            if (!_pools.ContainsKey(prefab))
             {
-                if (!objectInPool.activeInHierarchy)
-                {
-                    obj = objectInPool;
-                    break;
-                }
+                _pools[prefab] = new List<GameObject>();
             }
+
+            var obj = _pools[prefab].FirstOrDefault(p => !p.activeInHierarchy);
 
             if (obj == null)
             {
-                obj = Instantiate(prefab, transform);
-                _pools[prefab].Add(obj);
+                obj = CreateNewObjectInPool(prefab);
             }
 
             obj.SetActive(true);
             foreach (var init in obj.GetComponentsInChildren<IPoolSpawnInit>(true))
+            {
                 init.OnSpawned(owner, area, layerIndex);
+            }
+
             return obj;
         }
 
-        public GameObject ReturnToPool(GameObject prefab, SpawnManager owner, GameArea area, int layerIndex)
+        public void ReturnToPool(GameObject obj)
         {
-            
+            if (obj == null)
+                return;
+            obj.SetActive(false);
+
+            foreach (var prefab in _inactivePools.Keys)
+            {
+                if (obj.name.Contains(prefab.name))
+                {
+                    _inactivePools[prefab].Add(obj);
+                    return;
+                }
+            }
+        }
+
+        public GameObject SpawnFromSave(string enemyType, Vector3 position)
+        {
+            // Try exact match first
+            GameObject prefab = _prefabs.FirstOrDefault(p => p.name == enemyType);
+
+            // Fallback: Check if names contain each other (handles "Zombie" vs "ZombieEnemy")
+            if (prefab == null)
+            {
+                prefab = _prefabs.FirstOrDefault(p => p.name.Contains(enemyType) || enemyType.Contains(p.name));
+            }
+
+            if (prefab == null)
+            {
+                Debug.LogWarning(
+                    $"[PoolManager] Could not find prefab for type: '{enemyType}'. Available: {string.Join(", ", _prefabs.Select(p => p.name))}");
+                return null;
+            }
+
+            if (!_pools.ContainsKey(prefab))
+            {
+                _pools[prefab] = new List<GameObject>();
+            }
+
+            var obj = _pools[prefab].FirstOrDefault(p => !p.activeInHierarchy);
+
+            if (obj == null)
+            {
+                obj = CreateNewObjectInPool(prefab);
+            }
+
+            obj.transform.position = position;
+            obj.SetActive(true);
+            return obj;
+        }
+
+        public void DeactivateAllActiveObjects()
+        {
+            foreach (var poolList in _pools.Values)
+            {
+                foreach (var obj in poolList)
+                {
+                    if (obj != null && obj.activeInHierarchy)
+                    {
+                        obj.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        private GameObject CreateNewObjectInPool(GameObject prefab)
+        {
+            var obj = Instantiate(prefab, transform);
+            obj.SetActive(false);
+            _pools[prefab].Add(obj);
+            return obj;
         }
     }
 }

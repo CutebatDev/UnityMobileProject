@@ -11,6 +11,7 @@ namespace _Scripts
         {
             public WorldData World;
             public List<EnemyData> Enemies;
+            public EnemyPoolManager EnemyPoolManager;
 
             public GameSessionData()
             {
@@ -25,7 +26,6 @@ namespace _Scripts
             public float WorldPositionY { get; set; }
             public float WorldPositionZ { get; set; }
 
-            // Json needs this to instantiate the object without a Transform
             public WorldData()
             {
             }
@@ -56,20 +56,48 @@ namespace _Scripts
         [Serializable]
         public class EnemyData
         {
+            public string EnemyType { get; set; }
             public float EnemyPositionX { get; set; }
             public float EnemyPositionY { get; set; }
             public float EnemyPositionZ { get; set; }
 
-            // Json needs this to instantiate the object without a Transform
             public EnemyData()
             {
             }
 
-            public EnemyData(Transform enemyPosition)
+            public EnemyData(GameObject enemy)
             {
-                EnemyPositionX = enemyPosition.position.x;
-                EnemyPositionY = enemyPosition.position.y;
-                EnemyPositionZ = enemyPosition.position.z;
+                // Clean up the name to remove (Clone), (1), etc.
+                string cleanName = enemy.name.Replace("(Clone)", "");
+                int parenIndex = cleanName.IndexOf('(');
+                if (parenIndex > 0)
+                {
+                    cleanName = cleanName.Substring(0, parenIndex);
+                }
+
+                EnemyType = cleanName.Trim();
+
+                EnemyPositionX = enemy.transform.position.x;
+                EnemyPositionY = enemy.transform.position.y;
+                EnemyPositionZ = enemy.transform.position.z;
+            }
+        }
+
+        public class EnemyPoolManager
+        {
+            public float PoolPositionX { get; set; }
+            public float PoolPositionY { get; set; }
+            public float PoolPositionZ { get; set; }
+
+            public EnemyPoolManager()
+            {
+            }
+
+            public EnemyPoolManager(PoolManager enemyPoolTransform)
+            {
+                PoolPositionX = enemyPoolTransform.transform.position.x;
+                PoolPositionY = enemyPoolTransform.transform.position.y;
+                PoolPositionZ = enemyPoolTransform.transform.position.z;
             }
         }
     }
