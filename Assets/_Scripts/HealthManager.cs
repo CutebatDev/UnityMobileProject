@@ -7,9 +7,11 @@ namespace _Scripts
     public class HealthManager : MonoBehaviour
     {
         public float currentHealth = 10; // PUBLIC SO IT CAN BE SET TO SCRIPT OBJECT VALUE
+        private bool _isPlayer = false;
 
         private void Start()
         {
+            _isPlayer = CompareTag("Player");
             if (!gameObject.TryGetComponent<Collider>(out var component))
             {
                 Debug.Log("Collider on " + gameObject.name + " not found.");
@@ -18,7 +20,7 @@ namespace _Scripts
 
         private void OnCollisionEnter(Collision other)
         {
-            if(CompareTag("Player"))
+            if(_isPlayer)
             {
                 if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyProjectile"))
                 {
@@ -40,7 +42,7 @@ namespace _Scripts
 
         private void ObjectDeath()
         {
-            if (CompareTag("Player"))
+            if (_isPlayer)
             {
                 
                 // do gameover things

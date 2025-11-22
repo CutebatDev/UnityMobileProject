@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
         Vector3 dir = (player.position - transform.position).normalized;
         dir.y = 0; // keep y axis unchanged
         transform.Translate(dir * (levelParams.enemySpeed * Time.deltaTime));
-        mesh.transform.LookAt(player);
+        mesh.transform.LookAt(player); 
     }
     
 }

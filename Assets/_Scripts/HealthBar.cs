@@ -11,6 +11,7 @@ namespace _Scripts
         private float maxWidth;
         
         //DEBUG
+        public bool enableDebug = false;
         public float currentHealthDEBUG = 1;
 
         private void Start()
@@ -22,10 +23,11 @@ namespace _Scripts
         private void Update()
         {
             rectTransform.LookAt(Camera.main.transform);
-            setHealthPercent(currentHealthDEBUG);
+            if(enableDebug)
+                SetHealthPercent(currentHealthDEBUG);
         }
 
-        public void setHealthPercent(float health)
+        public void SetHealthPercent(float health)
         {
             health = Mathf.Clamp01(health);
             fillTransform.sizeDelta = new Vector2((health - 1) * maxWidth, fillTransform.sizeDelta.y);
