@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace _Scripts
@@ -129,6 +130,37 @@ namespace _Scripts
             {
                 Debug.LogError("Pool Manager reference is missing in GameSaveManager.");
             }
+        }
+
+        public Dictionary<DataToSave.GameSessionData, Sprite> GetSaveFiles()
+        {
+            var saveFilesPath = System.IO.Directory.GetFiles(Application.persistentDataPath);
+            Dictionary<DataToSave.GameSessionData, Sprite> savesAndScreenshots =
+                new Dictionary<DataToSave.GameSessionData, Sprite>();
+            foreach (var save in saveFilesPath)
+            {
+                if (save.Contains(".json"))
+                {
+                    savesAndScreenshots[(_saveLoadSystem.Load<DataToSave.GameSessionData>(save))] =
+                        GetSpriteFromSave(save);
+                }
+            }
+
+            return savesAndScreenshots;
+        }
+
+        private Sprite GetSpriteFromSave(string save)
+        {
+            save = save.Replace(".json", ".jpeg");
+            if (!File.Exists(save))
+            {
+                return null;
+            }
+
+            byte[] imageData = File.ReadAllBytes(save);
+            Texture2D texture = new Texture2D(128, 128);
+            texture.LoadImage(imageData);
+            return Sprite.Create(texture, new Rect(0, 0, 128, 128), new Vector2(0, 0));
         }
     }
 }

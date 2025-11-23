@@ -9,6 +9,7 @@ namespace _Scripts
         [SerializeField] private GameObject canvasInput;
         [SerializeField] private GameObject canvasPauseMenu;
         [SerializeField] private GameObject settingsPanelPrefab; // Assign in inspector
+        [SerializeField] private GameObject canvasLoadMenu;
         private GameObject currentSettingsPanel;
         public event Action OnSaveGame;
         public event Action OnLoadGame;
@@ -75,7 +76,14 @@ namespace _Scripts
 
         public void LoadButton()
         {
-            OnLoadGame?.Invoke();
+            //OnLoadGame?.Invoke();
+            OpenLoadMenu();
+        }
+
+        private void OpenLoadMenu()
+        {
+            canvasPauseMenu.SetActive(false);
+            canvasLoadMenu.SetActive(true);
         }
     }
 }
