@@ -10,7 +10,7 @@ namespace _Scripts
         public float currentHealth = 10; // PUBLIC SO IT CAN BE SET TO SCRIPT OBJECT VALUE
         private bool _isPlayer = false;
 
-        #region Player parametes
+        #region IFrames parametes
 
         private bool _isInvulnerable = false;
         private float _InvulnerablilityDuration = 0.5f;
@@ -46,7 +46,7 @@ namespace _Scripts
                     }
                 }
             }
-            else if (other.gameObject.CompareTag("PlayerProjectile"))
+            else if (other.gameObject.CompareTag("PlayerProjectile") || other.gameObject.CompareTag("Player")) // remove player collision later
             {
                 TakeDamage(1);
             }
@@ -67,11 +67,8 @@ namespace _Scripts
             }
             else
             {
-                GameObject.FindGameObjectWithTag("GameController").GetComponent<ScoreManager>().AddScore(10);
-                // do enemy death things
-                // PoolManager.Instance.ReturnToPool(gameObject.getParent()); idk smth like this
-                // also ScoreManager.Instance.AddScore(100500)
-                // maybe instead lots of instances we can use GameManagers GameObject and just do GameManagers.GetComponent<ScoreManager>().... etc
+                ScoreManager.Instance.AddScore(10);
+                PoolManager.Instance.ReturnToPool(gameObject);
             }
         }
     }

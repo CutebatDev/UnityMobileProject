@@ -7,16 +7,17 @@ namespace _Scripts
 {
     public class ScoreUI : MonoBehaviour
     {
-        ScoreManager scoreManager;
-        private TextMeshPro textMesh;
+        private ScoreManager _scoreManager;
+        public TMP_Text textMesh;
         private void Start()
         {
-            scoreManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<ScoreManager>();
+            _scoreManager = ScoreManager.Instance;
         }
 
         private void Update()
         {
-            textMesh.text = $"Score : {scoreManager.currentScore}";
+            textMesh.text = $"SCORE: {ScoreManager.Instance.currentScore}";
+            
         }
     }
 }

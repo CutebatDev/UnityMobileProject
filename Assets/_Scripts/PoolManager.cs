@@ -6,6 +6,7 @@ namespace _Scripts
 {
     public class PoolManager : MonoBehaviour
     {
+        public static PoolManager Instance { get; private set; }
         [SerializeField] private SpawnManager[] spawnManagers;
         [SerializeField] private bool isPreWarm;
         [SerializeField] private int initialAmount = 1;
@@ -13,9 +14,10 @@ namespace _Scripts
         private GameObject[] _prefabs;
         private readonly Dictionary<GameObject, List<GameObject>> _pools = new();
         private readonly Dictionary<GameObject, List<GameObject>> _inactivePools = new();
-
+        
         private void Awake()
         {
+            Instance = this;
             _prefabs = spawnManagers.SelectMany(sm => sm.GetPrefab()).Distinct().ToArray();
 
             foreach (var prefab in _prefabs)
