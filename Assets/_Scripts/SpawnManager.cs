@@ -10,6 +10,7 @@ namespace _Scripts
         [SerializeField] private PoolManager poolManager;
         [SerializeField] private float spawnTimer = 5f;
         public int layerIndex;
+        public SO_EnemyPreset[] EnemyPresets;
 
         void Start()
         {
@@ -27,6 +28,9 @@ namespace _Scripts
                     Vector3 spawnPos = gameArea.GetSpawnPosition(layer);
                     var obj = poolManager.GetFromPool(prefab, this, gameArea, layerIndex);
 
+                    int rng = Random.Range(0, EnemyPresets.Length);
+                    obj.GetComponent<Enemy>().Preset = EnemyPresets[rng];
+                    obj.GetComponent<Enemy>().UpdateToPreset();
                     obj.transform.position = spawnPos;
 
                     if (obj.TryGetComponent(out Enemy mover))

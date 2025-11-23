@@ -37,9 +37,19 @@ public class Enemy : MonoBehaviour
         speed = Preset.speed;
         healthManager.currentHealth = Preset.health;
         damage = Preset.damage;
-        transform.localScale *=  Preset.sizeModifier;
+        transform.localScale = Vector3.one * Preset.sizeModifier;
     }
-	
+
+    public void UpdateToPreset()
+    {
+        if(Preset != null)
+        {
+            speed = Preset.speed;
+            healthManager.currentHealth = Preset.health;
+            damage = Preset.damage;
+            transform.localScale = Vector3.one * Preset.sizeModifier;
+        }
+    }
 	// SO PARAMS END
 
     public void Initialize(SpawnManager owner, GameArea gameArea, int layerIndex)

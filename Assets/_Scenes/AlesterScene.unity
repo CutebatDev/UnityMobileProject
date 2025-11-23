@@ -509,54 +509,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &439723481
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 439723483}
-  - component: {fileID: 439723482}
-  m_Layer: 0
-  m_Name: OrientationManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &439723482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439723481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d27fc9f499c39374eb79a84e938a0670, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetCamera: {fileID: 1396423432910762514}
-  gameArea: {fileID: 2033507106}
-  portraitSize: 5
-  landscapeSize: 7
---- !u!4 &439723483
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439723481}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 61.538906, y: 0.5, z: -81.68776}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &540186115
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +749,9 @@ MonoBehaviour:
   poolManager: {fileID: 1607740259}
   spawnTimer: 1
   layerIndex: 0
+  EnemyPresets:
+  - {fileID: 11400000, guid: a9695594654f79544a45c6da7d3f50af, type: 2}
+  - {fileID: 11400000, guid: 93bd30e36ad50e241898a67e661d8073, type: 2}
 --- !u!4 &939799805
 Transform:
   m_ObjectHideFlags: 0
@@ -1537,6 +1492,7 @@ GameObject:
   - component: {fileID: 1399539496}
   - component: {fileID: 1399539495}
   - component: {fileID: 1399539498}
+  - component: {fileID: 1399539499}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: GameController
@@ -1601,6 +1557,22 @@ MonoBehaviour:
   currentScore: 0
   scorePerSecond: 1
   scoreTickLength: 1
+--- !u!114 &1399539499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399539494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27fc9f499c39374eb79a84e938a0670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCamera: {fileID: 1396423432910762514}
+  gameArea: {fileID: 2033507106}
+  portraitSize: 5
+  landscapeSize: 7
 --- !u!1 &1492360296
 GameObject:
   m_ObjectHideFlags: 0
@@ -2361,5 +2333,4 @@ SceneRoots:
   - {fileID: 1396423432910762513}
   - {fileID: 3084704456661454903}
   - {fileID: 939799805}
-  - {fileID: 439723483}
   - {fileID: 1399539497}
