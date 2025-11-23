@@ -56,6 +56,10 @@ namespace _Scripts
         [Serializable]
         public class EnemyData
         {
+            GameObject prefab { get; set; }
+            SpawnManager owner { get; set; }
+            GameArea area { get; set; }
+            int layerIndex { get; set; }
             public string EnemyType { get; set; }
             public float EnemyPositionX { get; set; }
             public float EnemyPositionY { get; set; }

@@ -1592,6 +1592,7 @@ MonoBehaviour:
   uiHandler: {fileID: 163667594}
   infiniteWorldTransform: {fileID: 1810354533}
   poolManager: {fileID: 1607740259}
+  poolPrefab: {fileID: 1607740258}
 --- !u!1 &1492360296
 GameObject:
   m_ObjectHideFlags: 0
