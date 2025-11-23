@@ -9,7 +9,12 @@ namespace _Scripts
         [SerializeField] public int playerHealth;
         [SerializeField] public int playerDamage;
 
-        [Header("Enemy")] [SerializeField] public int enemySpeed;
+
+        
+        [Header("Enemy")] [SerializeField] public float enemySpeedModifier;
+        [SerializeField] public float enemyDamageModifier;
+        [SerializeField] public float enemyHealthModifier;
+        [SerializeField] public float enemyScoreRewardModifier;
 
         [Header("World")] [SerializeField] public int[] worldBounds = new int[2];
     }

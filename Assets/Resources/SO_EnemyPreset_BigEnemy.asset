@@ -16,3 +16,4 @@ MonoBehaviour:
   health: 20
   damage: 2
   sizeModifier: 2
+  scoreReward: 0

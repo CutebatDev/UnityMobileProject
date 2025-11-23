@@ -10,44 +10,37 @@ public class Enemy : MonoBehaviour
     private GameArea _gameArea;
     private int _layerIndex;
     [SerializeField] private GameObject mesh;
-
-
-	// SO PARAMS
+    
 	
-	public SO_EnemyPreset Preset;
-
-    #region Enemy Parameters
-
-    [HideInInspector]
-    public float speed = 1;
+	public SO_EnemyPreset enemyPreset;
+    public LevelParameters difficulty;
     
-    [HideInInspector]
-    public float damage = 2;
+    [HideInInspector] public float speed = 1;
+    [HideInInspector] public float damage = 2;
+    [HideInInspector] public float scoreReward = 10;
 
-    private HealthManager healthManager;
-    
-    #endregion
+    private HealthManager _healthManager;
+
 
 
     private void Awake()
     {
-        healthManager = GetComponent<HealthManager>();
-        if (Preset == null)
-            Preset = Resources.Load<SO_EnemyPreset>("SO_EnemyPreset_NormalEnemy");
-        speed = Preset.speed;
-        healthManager.currentHealth = Preset.health;
-        damage = Preset.damage;
-        transform.localScale = Vector3.one * Preset.sizeModifier;
+        _healthManager = GetComponent<HealthManager>();
+        if (enemyPreset == null)
+            enemyPreset = Resources.Load<SO_EnemyPreset>("SO_EnemyPreset_NormalEnemy");
+        UpdateToPreset();
     }
 
     public void UpdateToPreset()
     {
-        if(Preset != null)
+        if(enemyPreset)
         {
-            speed = Preset.speed;
-            healthManager.currentHealth = Preset.health;
-            damage = Preset.damage;
-            transform.localScale = Vector3.one * Preset.sizeModifier;
+            speed =                         enemyPreset.speed * difficulty.enemySpeedModifier;
+            _healthManager.currentHealth =  enemyPreset.health * difficulty.enemyHealthModifier;
+            _healthManager.maxHealth =      enemyPreset.health * difficulty.enemyHealthModifier;
+            damage =                        enemyPreset.damage * difficulty.enemyDamageModifier;
+            scoreReward =                   enemyPreset.scoreReward * difficulty.enemyScoreRewardModifier;
+            transform.localScale =          Vector3.one * enemyPreset.sizeModifier;
         }
     }
 	// SO PARAMS END
@@ -74,7 +67,7 @@ public class Enemy : MonoBehaviour
     {
         Vector3 dir = (player.position - transform.position).normalized;
         dir.y = 0; // keep y axis unchanged
-        transform.Translate(dir * (levelParams.enemySpeed * Time.deltaTime));
+        transform.Translate(dir * (levelParams.enemySpeedModifier * Time.deltaTime));
         mesh.transform.rotation = Quaternion.LookRotation(dir);
     }
     

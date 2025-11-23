@@ -9,5 +9,6 @@ namespace _Scripts
         public float health;
         public float damage;
         public float sizeModifier;
+        public float scoreReward;
     }
 }

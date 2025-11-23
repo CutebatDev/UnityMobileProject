@@ -879,9 +879,8 @@ MonoBehaviour:
   poolManager: {fileID: 1607740259}
   spawnTimer: 1
   layerIndex: 0
-  EnemyPresets:
-  - {fileID: 11400000, guid: a9695594654f79544a45c6da7d3f50af, type: 2}
-  - {fileID: 11400000, guid: 93bd30e36ad50e241898a67e661d8073, type: 2}
+  enemyPresets: []
+  difficulty: {fileID: 11400000, guid: f70cff985d7c6c54a88e923e242f8951, type: 2}
 --- !u!4 &939799805
 Transform:
   m_ObjectHideFlags: 0
