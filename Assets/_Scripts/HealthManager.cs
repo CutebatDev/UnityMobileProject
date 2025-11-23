@@ -6,8 +6,17 @@ namespace _Scripts
 {
     public class HealthManager : MonoBehaviour
     {
+        public float maxHealth = 10;
         public float currentHealth = 10; // PUBLIC SO IT CAN BE SET TO SCRIPT OBJECT VALUE
         private bool _isPlayer = false;
+
+        #region Player parametes
+
+        private bool _isInvulnerable = false;
+        private float _InvulnerablilityDuration = 0.5f;
+        private float _iTimer = 0;
+
+        #endregion
 
         private void Start()
         {
@@ -18,18 +27,27 @@ namespace _Scripts
             }
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void FixedUpdate()
+        {
+            if(Time.time > _iTimer) _isInvulnerable = false;
+        }
+
+        private void OnTriggerStay(Collider other)
         {
             if(_isPlayer)
             {
                 if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyProjectile"))
                 {
-                    TakeDamage(1);
+                    if(!_isInvulnerable)
+                    {
+                        TakeDamage(1);
+                        _isInvulnerable = true;
+                        _iTimer = Time.time + _InvulnerablilityDuration;
+                    }
                 }
             }
-            else if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("PlayerProjectile"))
+            else if (other.gameObject.CompareTag("PlayerProjectile"))
             {
-                // maybe enemies dont take contact damage from player?
                 TakeDamage(1);
             }
         }
@@ -44,11 +62,12 @@ namespace _Scripts
         {
             if (_isPlayer)
             {
-                
-                // do gameover things
+
+                Time.timeScale = 0;
             }
             else
             {
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<ScoreManager>().AddScore(10);
                 // do enemy death things
                 // PoolManager.Instance.ReturnToPool(gameObject.getParent()); idk smth like this
                 // also ScoreManager.Instance.AddScore(100500)

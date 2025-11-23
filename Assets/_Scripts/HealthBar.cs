@@ -23,6 +23,7 @@ namespace _Scripts
         private void Update()
         {
             rectTransform.LookAt(Camera.main.transform);
+            SetHealthPercent(healthManager.currentHealth / healthManager.maxHealth);
             if(enableDebug)
                 SetHealthPercent(currentHealthDEBUG);
         }
