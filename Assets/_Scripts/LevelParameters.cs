@@ -11,7 +11,9 @@ namespace _Scripts
 
 
         
-        [Header("Enemy")] [SerializeField] public float enemySpeedModifier;
+        [Header("Enemy")] 
+        [SerializeField] public SO_EnemyPreset[] enemyPresets;
+        [SerializeField] public float enemySpeedModifier;
         [SerializeField] public float enemyDamageModifier;
         [SerializeField] public float enemyHealthModifier;
         [SerializeField] public float enemyScoreRewardModifier;

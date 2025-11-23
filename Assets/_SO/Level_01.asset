@@ -15,6 +15,9 @@ MonoBehaviour:
   playerSpeed: 20
   playerHealth: 20
   playerDamage: 1
+  enemyPresets:
+  - {fileID: 11400000, guid: a9695594654f79544a45c6da7d3f50af, type: 2}
+  - {fileID: 11400000, guid: 93bd30e36ad50e241898a67e661d8073, type: 2}
   enemySpeedModifier: 1
   enemyDamageModifier: 1
   enemyHealthModifier: 1

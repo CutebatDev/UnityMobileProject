@@ -10,8 +10,7 @@ namespace _Scripts
         [SerializeField] private PoolManager poolManager;
         [SerializeField] private float spawnTimer = 5f;
         public int layerIndex;
-        public SO_EnemyPreset[] enemyPresets;
-        public LevelParameters difficulty;
+        public LevelParameters levelParameters;
 
         void Start()
         {
@@ -28,20 +27,30 @@ namespace _Scripts
                 {
                     Vector3 spawnPos = gameArea.GetSpawnPosition(layer);
                     var obj = poolManager.GetFromPool(prefab, this, gameArea, layerIndex);
-
-                    int rng = Random.Range(0, enemyPresets.Length);
-                    obj.GetComponent<Enemy>().enemyPreset = enemyPresets[rng];
-                    obj.GetComponent<Enemy>().UpdateToPreset();
-                    obj.transform.position = spawnPos;
-
+                    
                     if (obj.TryGetComponent(out Enemy mover))
-                        mover.Initialize(this, gameArea, layerIndex);
+                        InitializeEnemy(mover, spawnPos);
+                    else if (obj.TryGetComponent(out Collectable collectable))
+                    {
+                        // TODO this
+                    }
+
                 }
 
                 yield return new WaitForSeconds(spawnTimer);
             }
         }
 
+        private void InitializeEnemy(Enemy enemy, Vector3 spawnPos)
+        {
+          int rng = Random.Range(0, levelParameters.enemyPresets.Length);
+            enemy.enemyPreset = levelParameters.enemyPresets[rng];
+            enemy.UpdateToPreset();
+            enemy.transform.position = spawnPos;
+            
+            enemy.Initialize(this, gameArea, layerIndex);
+            
+        }
 
         public GameObject[] GetPrefab()
         {
