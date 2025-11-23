@@ -9,7 +9,7 @@ public class SpawnLayer
     public float distanceToCamera = 10f;
 
     public float padding = 2f;
-    
+
     // Store original padding to avoid compounding multipliers
     [HideInInspector] public float originalPadding;
 
@@ -29,8 +29,9 @@ public class GameArea : MonoBehaviour
     [SerializeField] private float rightBorder = 1;
     [SerializeField] private float topBorder = 1;
 
-    [Header("Orientation Adaptation")]
-    [SerializeField] private bool adaptToOrientation = true;
+    [Header("Orientation Adaptation")] [SerializeField]
+    private bool adaptToOrientation = true;
+
     [SerializeField] private float portraitPaddingMultiplier = 1.0f;
     [SerializeField] private float landscapePaddingMultiplier = 1.5f;
 
@@ -42,7 +43,7 @@ public class GameArea : MonoBehaviour
             if (layer.originalPadding == 0) // Only set if not already set
                 layer.originalPadding = layer.padding;
         }
-        
+
         RecalculateAllLayers();
     }
 
@@ -56,7 +57,7 @@ public class GameArea : MonoBehaviour
                 if (layer.originalPadding == 0) // Only set if not already set
                     layer.originalPadding = layer.padding;
             }
-            
+
             if (layers.Length > 0)
                 RecalculateAllLayers();
         }
@@ -68,8 +69,8 @@ public class GameArea : MonoBehaviour
         {
             RecalculateLayerBounds(layer);
         }
-        
-        Debug.Log($"GameArea bounds recalculated for {(IsLandscapeOrientation() ? "Landscape" : "Portrait")} - Width: {GetAreaWidth():F2}, Height: {GetAreaHeight():F2}");
+
+        //Debug.Log($"GameArea bounds recalculated for {(IsLandscapeOrientation() ? "Landscape" : "Portrait")} - Width: {GetAreaWidth():F2}, Height: {GetAreaHeight():F2}");
     }
 
     void RecalculateLayerBounds(SpawnLayer layer)
@@ -81,7 +82,7 @@ public class GameArea : MonoBehaviour
 
         layer.minBounds = new Vector3(bottomLeft.x, bottomLeft.z, bottomLeft.y);
         layer.maxBounds = new Vector3(topRight.x, topRight.z, topRight.y);
-        
+
         // Reset padding to original value, then apply orientation multiplier
         if (adaptToOrientation)
         {
@@ -99,14 +100,14 @@ public class GameArea : MonoBehaviour
         float x = 0;
         float y = terrainPos.position.y + 0.5f;
         float z = 0;
-        
+
         // Get current spawn area dimensions
         float areaWidth = layer.maxBounds.x - layer.minBounds.x;
         float areaHeight = layer.maxBounds.y - layer.minBounds.y;
-        
+
         // Adjust spawn logic based on orientation
         int spawnSide = GetWeightedSpawnSide(areaWidth, areaHeight);
-        
+
         switch (spawnSide)
         {
             case 0: // top
@@ -129,14 +130,14 @@ public class GameArea : MonoBehaviour
 
         return new Vector3(x, y, z);
     }
-    
+
     private int GetWeightedSpawnSide(float areaWidth, float areaHeight)
     {
         if (!adaptToOrientation)
             return Random.Range(0, 4); // Equal probability for all sides
-            
+
         bool isLandscape = IsLandscapeOrientation();
-        
+
         if (isLandscape)
         {
             // In landscape, favor left/right spawning since we have more width
@@ -164,20 +165,20 @@ public class GameArea : MonoBehaviour
                pos.z < layer.minBounds.y - layer.padding ||
                pos.z > layer.maxBounds.y + layer.padding;
     }
-    
+
     private bool IsLandscapeOrientation()
     {
-        return Screen.orientation == ScreenOrientation.LandscapeLeft || 
+        return Screen.orientation == ScreenOrientation.LandscapeLeft ||
                Screen.orientation == ScreenOrientation.LandscapeRight;
     }
-    
+
     private float GetAreaWidth()
     {
         if (layers.Length > 0)
             return layers[0].maxBounds.x - layers[0].minBounds.x;
         return 0f;
     }
-    
+
     private float GetAreaHeight()
     {
         if (layers.Length > 0)
@@ -207,13 +208,17 @@ public class GameArea : MonoBehaviour
             Gizmos.DrawLine(br, tr);
             Gizmos.DrawLine(tr, tl);
             Gizmos.DrawLine(tl, bl);
-            
+
             // Draw spawn padding area
             Gizmos.color = Color.red;
-            Vector3 blPad = new Vector3(layer.minBounds.x - layer.padding, layer.minBounds.z, layer.minBounds.y - layer.padding);
-            Vector3 brPad = new Vector3(layer.maxBounds.x + layer.padding, layer.minBounds.z, layer.minBounds.y - layer.padding);
-            Vector3 trPad = new Vector3(layer.maxBounds.x + layer.padding, layer.minBounds.z, layer.maxBounds.y + layer.padding);
-            Vector3 tlPad = new Vector3(layer.minBounds.x - layer.padding, layer.minBounds.z, layer.maxBounds.y + layer.padding);
+            Vector3 blPad = new Vector3(layer.minBounds.x - layer.padding, layer.minBounds.z,
+                layer.minBounds.y - layer.padding);
+            Vector3 brPad = new Vector3(layer.maxBounds.x + layer.padding, layer.minBounds.z,
+                layer.minBounds.y - layer.padding);
+            Vector3 trPad = new Vector3(layer.maxBounds.x + layer.padding, layer.minBounds.z,
+                layer.maxBounds.y + layer.padding);
+            Vector3 tlPad = new Vector3(layer.minBounds.x - layer.padding, layer.minBounds.z,
+                layer.maxBounds.y + layer.padding);
 
             Gizmos.DrawLine(blPad, brPad);
             Gizmos.DrawLine(brPad, trPad);
