@@ -10,7 +10,7 @@ namespace _Scripts
         public int currentExp = 0;
         public int requiredExp = 20;
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
         }
