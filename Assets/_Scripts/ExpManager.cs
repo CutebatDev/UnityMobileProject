@@ -5,11 +5,17 @@ namespace _Scripts
 {
     public class ExpManager : MonoBehaviour
     {
+        public static ExpManager Instance;
         public int currentLevel = 1;
         public int currentExp = 0;
         public int requiredExp = 20;
 
-        public void GetExp(int value)
+        private void Start()
+        {
+            Instance = this;
+        }
+
+        public void AddExp(int value)
         {
             currentExp += value;
             if(currentExp >= requiredExp)
@@ -21,6 +27,7 @@ namespace _Scripts
             currentExp = Math.Clamp(currentExp-requiredExp, 0, Int32.MaxValue);
             currentLevel++;
             requiredExp = (int)Math.Floor(requiredExp*1.5);
+            // TODO Add player stats on LevelUp
         }
     }
 }

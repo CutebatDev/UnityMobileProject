@@ -17,6 +17,7 @@ namespace _Scripts
         [SerializeField] public float enemyDamageModifier;
         [SerializeField] public float enemyHealthModifier;
         [SerializeField] public float enemyScoreRewardModifier;
+        [SerializeField] public SO_ExpPreset[] expPresets;
 
         [Header("World")] [SerializeField] public int[] worldBounds = new int[2];
     }

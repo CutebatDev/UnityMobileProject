@@ -30,9 +30,11 @@ namespace _Scripts
                     
                     if (obj.TryGetComponent(out Enemy mover))
                         InitializeEnemy(mover, spawnPos);
+                    
                     else if (obj.TryGetComponent(out Collectable collectable))
                     {
-                        // TODO this
+                         if(collectable.gameObject.CompareTag("CollectableExp"))
+                             InitializeExp(collectable, spawnPos);
                     }
 
                 }
@@ -43,13 +45,22 @@ namespace _Scripts
 
         private void InitializeEnemy(Enemy enemy, Vector3 spawnPos)
         {
-          int rng = Random.Range(0, levelParameters.enemyPresets.Length);
+            int rng = Random.Range(0, levelParameters.enemyPresets.Length);
             enemy.enemyPreset = levelParameters.enemyPresets[rng];
+            enemy.difficulty = levelParameters;
             enemy.UpdateToPreset();
             enemy.transform.position = spawnPos;
             
             enemy.Initialize(this, gameArea, layerIndex);
-            
+        }
+        
+        private void InitializeExp(Collectable exp, Vector3 spawnPos)
+        {
+            int rng = Random.Range(0, levelParameters.expPresets.Length);
+            exp.expPreset = levelParameters.expPresets[rng];
+            exp.UpdateToPreset();
+            exp.transform.position = spawnPos;
+            exp.Initialize(this, gameArea, layerIndex);
         }
 
         public GameObject[] GetPrefab()

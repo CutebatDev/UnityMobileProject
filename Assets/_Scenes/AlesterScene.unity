@@ -875,12 +875,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 5909804849905570553, guid: a3e1449bdb6bafa4d8e16193b6e7866b, type: 3}
+  - {fileID: 7535874513750887550, guid: 27ead531daa2cd14496103a12483466e, type: 3}
   gameArea: {fileID: 2033507106}
   poolManager: {fileID: 1607740259}
   spawnTimer: 1
   layerIndex: 0
-  enemyPresets: []
-  difficulty: {fileID: 11400000, guid: f70cff985d7c6c54a88e923e242f8951, type: 2}
+  levelParameters: {fileID: 11400000, guid: f70cff985d7c6c54a88e923e242f8951, type: 2}
 --- !u!4 &939799805
 Transform:
   m_ObjectHideFlags: 0
@@ -2387,6 +2387,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3748312217316209089, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1396423432910762524}
+    - targetCorrespondingSourceObject: {fileID: 3748312217316209089, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1396423432910762528}
     - targetCorrespondingSourceObject: {fileID: 7594708436024540400, guid: b3a32458fa4ccbf4b99702ea8916190e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2033507106}
@@ -2447,6 +2450,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1396423432910762528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396423432910762515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ebf40428dc4d5ba16df5b38bba3e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Scripts.ExpManager
+  currentLevel: 1
+  currentExp: 0
+  requiredExp: 20
 --- !u!1001 &3084704456661454903
 PrefabInstance:
   m_ObjectHideFlags: 0

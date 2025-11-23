@@ -26,24 +26,20 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _healthManager = GetComponent<HealthManager>();
-        if (enemyPreset == null)
-            enemyPreset = Resources.Load<SO_EnemyPreset>("SO_EnemyPreset_NormalEnemy");
-        UpdateToPreset();
     }
 
     public void UpdateToPreset()
     {
         if(enemyPreset)
         {
-            speed =                         enemyPreset.speed * difficulty.enemySpeedModifier;
             _healthManager.currentHealth =  enemyPreset.health * difficulty.enemyHealthModifier;
             _healthManager.maxHealth =      enemyPreset.health * difficulty.enemyHealthModifier;
+            speed =                         enemyPreset.speed * difficulty.enemySpeedModifier;
             damage =                        enemyPreset.damage * difficulty.enemyDamageModifier;
             scoreReward =                   enemyPreset.scoreReward * difficulty.enemyScoreRewardModifier;
             transform.localScale =          Vector3.one * enemyPreset.sizeModifier;
         }
     }
-	// SO PARAMS END
 
     public void Initialize(SpawnManager owner, GameArea gameArea, int layerIndex)
     {
@@ -59,7 +55,7 @@ public class Enemy : MonoBehaviour
         if (_gameArea != null &&
             _gameArea.IsOutOfBounds(transform.position, _gameArea.layers[_layerIndex]))
         {
-            gameObject.SetActive(false);
+            PoolManager.Instance.ReturnToPool(gameObject);
         }
     }
 

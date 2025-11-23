@@ -8,6 +8,7 @@ TagManager:
   - PlayerProjectile
   - Enemy
   - EnemyProjectile
+  - CollectableExp
   layers:
   - Default
   - TransparentFX

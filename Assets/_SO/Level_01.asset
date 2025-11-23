@@ -22,4 +22,7 @@ MonoBehaviour:
   enemyDamageModifier: 1
   enemyHealthModifier: 1
   enemyScoreRewardModifier: 1
+  expPresets:
+  - {fileID: 11400000, guid: 7e11775a105d75d40974a4a81ad1b4db, type: 2}
+  - {fileID: 11400000, guid: 00284531feb600a46a6747d11f8a3885, type: 2}
   worldBounds: 0a000000000000000a000000
