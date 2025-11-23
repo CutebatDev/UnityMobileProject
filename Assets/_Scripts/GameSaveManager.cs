@@ -12,7 +12,16 @@ namespace _Scripts
         [SerializeField] private GameObject poolPrefab;
 
         private SaveLoadSystem _saveLoadSystem;
-        private const string SaveFileName = "save.json";
+        private const string SaveFileName = "save";
+        private const string SaveFileExtension = ".json";
+
+        public static string SavePath =>
+            Application.persistentDataPath + "/" + SaveFileName + saveIndex() + SaveFileExtension;
+
+        private static int saveIndex()
+        {
+            return System.IO.Directory.GetFiles(Application.persistentDataPath).Length;
+        }
 
         private void Awake()
         {
@@ -48,32 +57,13 @@ namespace _Scripts
                 return;
             }
 
-            var sessionData = new DataToSave.GameSessionData
-            {
-                World = new DataToSave.WorldData(infiniteWorldTransform),
-                EnemyPoolManager = new DataToSave.EnemyPoolManager(poolManager)
-            };
-
+            var sessionData = new DataToSave.GameSessionData(infiniteWorldTransform, poolManager);
             // Save enemies
             Debug.Log($"[SAVE DEBUG] PoolManager name: {poolManager.name}");
             Debug.Log($"[SAVE DEBUG] PoolManager child count: {poolManager.transform.childCount}");
-            
-            var enemies = poolManager.transform.GetComponentsInChildren(typeof(Enemy), true);
-            Debug.Log($"[SAVE DEBUG] Found {enemies.Length} Enemy components (including inactive)");
-            
-            sessionData.Enemies = new List<DataToSave.EnemyData>();
-
-            foreach (var enemy in enemies)
-            {
-                if (enemy is Component component)
-                {
-                    Debug.Log($"[SAVE DEBUG] Adding enemy: {component.gameObject.name} at position {component.gameObject.transform.position}");
-                    sessionData.Enemies.Add(new DataToSave.EnemyData(component.gameObject));
-                }
-            }
-
+            Debug.Log($"[SAVE DEBUG] Found {sessionData.Enemies} Enemy components (including inactive)");
             Debug.Log($"[SAVE DEBUG] Total enemies saved to JSON: {sessionData.Enemies.Count}");
-            _saveLoadSystem.Save(sessionData, SaveFileName);
+            _saveLoadSystem.Save(sessionData, SavePath);
             Debug.Log("Game saved!");
         }
 
@@ -81,7 +71,7 @@ namespace _Scripts
         {
             Debug.Log("Loading Game...");
 
-            var loadedData = _saveLoadSystem.Load<DataToSave.GameSessionData>(SaveFileName);
+            var loadedData = _saveLoadSystem.Load<DataToSave.GameSessionData>(SavePath);
             if (loadedData == null)
             {
                 Debug.LogWarning("Save data not found or empty.");
