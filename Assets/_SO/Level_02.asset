@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853a601c388ccb54889306dd612afe69, type: 3}
+  m_Name: Level_02
+  m_EditorClassIdentifier: 
+  playerSpeed: 20
+  playerHealth: 20
+  playerDamage: 1
+  enemyPresets:
+  - {fileID: 11400000, guid: a9695594654f79544a45c6da7d3f50af, type: 2}
+  - {fileID: 11400000, guid: 93bd30e36ad50e241898a67e661d8073, type: 2}
+  enemySpeedModifier: 1.2
+  enemyDamageModifier: 1.2
+  enemyHealthModifier: 1.2
+  enemyScoreRewardModifier: 1.2
+  expPresets:
+  - {fileID: 11400000, guid: 7e11775a105d75d40974a4a81ad1b4db, type: 2}
+  - {fileID: 11400000, guid: 00284531feb600a46a6747d11f8a3885, type: 2}
+  worldBounds: 0a000000000000000a000000
