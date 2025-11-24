@@ -41,7 +41,7 @@ namespace _Scripts
             return obj;
         }
 
-        public GameObject GetFromPool(GameObject prefab, SpawnManager owner, GameArea area, int layerIndex)
+        public GameObject GetFromPool(GameObject prefab) // SpawnManager owner, GameArea area, int layerIndex
         {
             if (!_pools.ContainsKey(prefab))
             {

@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LevelParameters levelParams;
     private GameArea _gameArea;
     private int _layerIndex;
+    public static List<Enemy> enemies = new List<Enemy>();
     [SerializeField] private GameObject mesh;
     
 	
