@@ -335,8 +335,8 @@ MonoBehaviour:
   infiniteWorldTransform: {fileID: 1810354533}
   poolManager: {fileID: 1607740259}
   poolPrefab: {fileID: 1607740258}
-  screenshotWidth: 512
-  screenshotHeight: 512
+  screenshotWidth: 128
+  screenshotHeight: 128
 --- !u!114 &641101160
 MonoBehaviour:
   m_ObjectHideFlags: 0
