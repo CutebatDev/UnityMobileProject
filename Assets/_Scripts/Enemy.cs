@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using _Scripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 public class Enemy : MonoBehaviour
@@ -12,16 +13,16 @@ public class Enemy : MonoBehaviour
     private int _layerIndex;
     public static List<Enemy> enemies = new List<Enemy>();
     [SerializeField] private GameObject mesh;
-    
-	
-	public SO_EnemyPreset enemyPreset;
+
+
+    public SO_EnemyPreset enemyPreset;
     public LevelParameters difficulty;
-    
+
     [HideInInspector] public float speed = 1;
     [HideInInspector] public float damage = 2;
     [HideInInspector] public int scoreReward = 10;
 
-    private HealthManager _healthManager;
+    public HealthManager healthManager;
 
 
     private void OnEnable()
@@ -36,19 +37,19 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        _healthManager = GetComponent<HealthManager>();
+        healthManager = GetComponent<HealthManager>();
     }
 
     public void UpdateToPreset()
     {
-        if(enemyPreset)
+        if (enemyPreset)
         {
-            _healthManager.currentHealth =  enemyPreset.health * difficulty.enemyHealthModifier;
-            _healthManager.maxHealth =      enemyPreset.health * difficulty.enemyHealthModifier;
-            speed =                         enemyPreset.speed * difficulty.enemySpeedModifier;
-            damage =                        enemyPreset.damage * difficulty.enemyDamageModifier;
-            scoreReward =                   (int)(enemyPreset.scoreReward * difficulty.enemyScoreRewardModifier);
-            transform.localScale =          Vector3.one * enemyPreset.sizeModifier;
+            healthManager.currentHealth = enemyPreset.health * difficulty.enemyHealthModifier;
+            healthManager.maxHealth = enemyPreset.health * difficulty.enemyHealthModifier;
+            speed = enemyPreset.speed * difficulty.enemySpeedModifier;
+            damage = enemyPreset.damage * difficulty.enemyDamageModifier;
+            scoreReward = (int)(enemyPreset.scoreReward * difficulty.enemyScoreRewardModifier);
+            transform.localScale = Vector3.one * enemyPreset.sizeModifier;
         }
     }
 

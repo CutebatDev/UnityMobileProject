@@ -648,101 +648,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &641101158
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 641101163}
-  - component: {fileID: 641101162}
-  - component: {fileID: 641101161}
-  - component: {fileID: 641101160}
-  - component: {fileID: 641101159}
-  m_Layer: 0
-  m_Name: GameManagers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &641101159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641101158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf3893fb7cd74597b8e0353a4da9c70c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Scripts.GameSaveManager
-  uiHandler: {fileID: 1296905066}
-  infiniteWorldTransform: {fileID: 1810354533}
-  poolManager: {fileID: 1607740259}
-  poolPrefab: {fileID: 0}
-  screenshotWidth: 512
-  screenshotHeight: 512
---- !u!114 &641101160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641101158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7648c31e360fce548b6e7d0fb29c0f06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
-  currentScore: 0
-  scorePerSecond: 1
-  scoreTickLength: 1
---- !u!114 &641101161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641101158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 692dd5ddf296a2b40a7729659aa41310, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
-  soundEffectSources: []
---- !u!114 &641101162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641101158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a9690b58be5a842ab040c15954fc1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultSettings: {fileID: 11400000, guid: 1f805ef5df62feb499d5cd0567ea9531, type: 2}
---- !u!4 &641101163
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641101158}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 768, y: 1024, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &743846957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1043,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1252798855
@@ -1377,6 +1282,7 @@ GameObject:
   - component: {fileID: 1399539495}
   - component: {fileID: 1399539498}
   - component: {fileID: 1399539499}
+  - component: {fileID: 1399539500}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: GameController
@@ -1457,6 +1363,24 @@ MonoBehaviour:
   gameArea: {fileID: 2033507106}
   portraitSize: 5
   landscapeSize: 7
+--- !u!114 &1399539500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399539494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3893fb7cd74597b8e0353a4da9c70c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Scripts.GameSaveManager
+  uiHandler: {fileID: 1296905066}
+  infiniteWorldTransform: {fileID: 1810354533}
+  poolManager: {fileID: 1607740259}
+  playerHealthManager: {fileID: 1396423432910762516}
+  screenshotWidth: 128
+  screenshotHeight: 128
 --- !u!1 &1427933478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,8 +1743,8 @@ MonoBehaviour:
     distanceToCamera: 50
     padding: 0
     originalPadding: 0
-    minBounds: {x: -21.867233, y: -58.31262, z: 0}
-    maxBounds: {x: 21.867235, y: 58.312603, z: -0.0000076293945}
+    minBounds: {x: -21.856558, y: -58.31262, z: 0}
+    maxBounds: {x: 21.85656, y: 58.312603, z: -0.0000076293945}
   terrainPos: {fileID: 1142766304}
   leftBorder: 0.25
   bottomBorder: 0
@@ -2255,7 +2179,11 @@ PrefabInstance:
     - target: {fileID: 5823004213991876917, guid: 3aea71f4c8e1c974f934a9ea385ebd82, type: 3}
       propertyPath: gameSaveManager
       value: 
-      objectReference: {fileID: 641101159}
+      objectReference: {fileID: 1399539500}
+    - target: {fileID: 8943906134909864127, guid: 3aea71f4c8e1c974f934a9ea385ebd82, type: 3}
+      propertyPath: m_Name
+      value: BackButton
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2279,7 +2207,6 @@ SceneRoots:
   - {fileID: 3084704456661454903}
   - {fileID: 939799805}
   - {fileID: 439723483}
-  - {fileID: 641101163}
   - {fileID: 1633929220}
   - {fileID: 190538472}
   - {fileID: 309035512}

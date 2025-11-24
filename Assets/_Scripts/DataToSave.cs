@@ -13,16 +13,18 @@ namespace _Scripts
             public WorldData World;
             public List<EnemyData> Enemies;
             public EnemyPoolManager EnemyPoolManager;
+            public PlayerData Player;
 
             public GameSessionData()
             {
             }
 
-            public GameSessionData(Transform world, PoolManager enemyPoolManager)
+            public GameSessionData(Transform world, PoolManager enemyPoolManager, HealthManager playerHealth)
             {
                 World = new WorldData(world);
                 EnemyPoolManager = new EnemyPoolManager(enemyPoolManager);
                 Enemies = Enemy.enemies.Select(enemy => new EnemyData(enemy)).ToList();
+                Player = new PlayerData(playerHealth.maxHealth, playerHealth.currentHealth);
             }
 
             /* Enemies = Enemy.enemies.Select(enemy => new EnemyData(enemy)).ToList(); ->
@@ -54,15 +56,21 @@ namespace _Scripts
         [Serializable]
         public class PlayerData
         {
-            public int Health { get; set; }
-            public int Lives { get; set; }
-            public int Score { get; set; }
+            public float MaxHealth { get; set; }
+            public float CurrentHealth { get; set; }
+            public int CurrentLevel { get; set; }
+            public int CurrentExp { get; set; }
+            public int RequiredXp { get; set; }
+            public int CurrentScore { get; set; }
 
-            public PlayerData(int health, int lives, int score)
+            public PlayerData(float maxHealth, float currentHealth)
             {
-                Health = health;
-                Lives = lives;
-                Score = score;
+                MaxHealth = maxHealth;
+                CurrentHealth = currentHealth;
+                CurrentLevel = ExpManager.Instance.currentLevel;
+                CurrentExp = ExpManager.Instance.currentExp;
+                RequiredXp = ExpManager.Instance.requiredExp;
+                CurrentScore = ScoreManager.Instance.currentScore;
             }
         }
 
@@ -73,6 +81,8 @@ namespace _Scripts
             public float EnemyPositionX { get; set; }
             public float EnemyPositionY { get; set; }
             public float EnemyPositionZ { get; set; }
+            public float MaxHealth { get; set; }
+            public float CurrentHealth { get; set; }
 
             public EnemyData()
             {
@@ -93,6 +103,9 @@ namespace _Scripts
                 EnemyPositionX = enemy.transform.position.x;
                 EnemyPositionY = enemy.transform.position.y;
                 EnemyPositionZ = enemy.transform.position.z;
+                Debug.Log($"[SAVE DEBUG] HealthManager name: {enemy.healthManager == null}");
+                MaxHealth = enemy.healthManager.maxHealth;
+                CurrentHealth = enemy.healthManager.currentHealth;
             }
         }
 

@@ -17,14 +17,21 @@ namespace _Scripts
                 return;
             }
 
+            foreach (var handler in loadFileUIHandlers)
+            {
+                Destroy(handler.gameObject);
+            }
+
+            loadFileUIHandlers.Clear();
+
             if (loadFileUIHandlers == null)
             {
                 loadFileUIHandlers = new List<LoadFileUIHandler>();
             }
 
-            var dictOfSaves = gameSaveManager.GetSaveFiles();
+            var _dictOfSaves = gameSaveManager.GetSaveFiles();
 
-            foreach (var save in dictOfSaves)
+            foreach (var save in _dictOfSaves)
             {
                 var handler = Instantiate(loadFileUIHandlerPrefab, transform);
                 handler.Initialize(save.Key, save.Value);

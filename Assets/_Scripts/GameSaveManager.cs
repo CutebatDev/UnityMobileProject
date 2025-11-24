@@ -10,7 +10,7 @@ namespace _Scripts
         [SerializeField] private UIHandler uiHandler;
         [SerializeField] private Transform infiniteWorldTransform;
         [SerializeField] private PoolManager poolManager;
-        [SerializeField] private GameObject poolPrefab;
+        [SerializeField] private HealthManager playerHealthManager;
         [SerializeField] private int screenshotWidth = 512;
         [SerializeField] private int screenshotHeight = 512;
 
@@ -59,7 +59,7 @@ namespace _Scripts
                 return;
             }
 
-            var sessionData = new DataToSave.GameSessionData(infiniteWorldTransform, poolManager);
+            var sessionData = new DataToSave.GameSessionData(infiniteWorldTransform, poolManager, playerHealthManager);
             // Save enemies
             Debug.Log($"[SAVE DEBUG] PoolManager name: {poolManager.name}");
             Debug.Log($"[SAVE DEBUG] PoolManager child count: {poolManager.transform.childCount}");
@@ -173,6 +173,21 @@ namespace _Scripts
             else
             {
                 Debug.LogError("Pool Manager reference is missing in GameSaveManager.");
+            }
+
+            // 4. Restore Player stats
+            if (loadedData.Player != null)
+            {
+                playerHealthManager.maxHealth = loadedData.Player.MaxHealth;
+                playerHealthManager.currentHealth = loadedData.Player.CurrentHealth;
+                ExpManager.Instance.currentLevel = loadedData.Player.CurrentLevel;
+                ExpManager.Instance.currentExp = loadedData.Player.CurrentExp;
+                ExpManager.Instance.requiredExp = loadedData.Player.RequiredXp;
+                ScoreManager.Instance.currentScore = loadedData.Player.CurrentScore;
+            }
+            else
+            {
+                Debug.LogError("Player reference is missing in GameSaveManager.");
             }
         }
 
