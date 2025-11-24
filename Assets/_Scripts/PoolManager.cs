@@ -33,7 +33,15 @@ namespace _Scripts
             }
         }
 
-        public GameObject GetFromPool(GameObject prefab) //SpawnManager owner, GameArea area, int layerIndex
+        private GameObject CreateNewObjectInPool(GameObject prefab)
+        {
+            var obj = Instantiate(prefab, transform);
+            obj.SetActive(false);
+            _pools[prefab].Add(obj);
+            return obj;
+        }
+
+        public GameObject GetFromPool(GameObject prefab, SpawnManager owner, GameArea area, int layerIndex)
         {
             if (!_pools.ContainsKey(prefab))
             {
@@ -75,10 +83,8 @@ namespace _Scripts
 
         public GameObject SpawnFromSave(string enemyType, Vector3 position)
         {
-            // Try exact match first
             GameObject prefab = _prefabs.FirstOrDefault(p => p.name == enemyType);
 
-            // Fallback: Check if names contain each other (handles "Zombie" vs "ZombieEnemy")
             if (prefab == null)
             {
                 prefab = _prefabs.FirstOrDefault(p => p.name.Contains(enemyType) || enemyType.Contains(p.name));
@@ -120,14 +126,6 @@ namespace _Scripts
                     }
                 }
             }
-        }
-
-        private GameObject CreateNewObjectInPool(GameObject prefab)
-        {
-            var obj = Instantiate(prefab, transform);
-            obj.SetActive(false);
-            _pools[prefab].Add(obj);
-            return obj;
         }
     }
 }

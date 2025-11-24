@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using _Scripts;
 using UnityEngine;
 using Random = System.Random;
@@ -22,6 +23,15 @@ public class Enemy : MonoBehaviour
     private HealthManager _healthManager;
 
 
+    private void OnEnable()
+    {
+        enemies.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        enemies.Remove(this);
+    }
 
     private void Awake()
     {
@@ -61,10 +71,11 @@ public class Enemy : MonoBehaviour
 
     private void MovementToPlayer()
     {
+        if (player == null)
+            return;
         Vector3 dir = (player.position - transform.position).normalized;
         dir.y = 0; // keep y axis unchanged
         transform.Translate(dir * (levelParams.enemySpeedModifier * Time.deltaTime));
         mesh.transform.rotation = Quaternion.LookRotation(dir);
     }
-    
 }

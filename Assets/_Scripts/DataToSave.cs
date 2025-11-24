@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace _Scripts
@@ -15,8 +16,20 @@ namespace _Scripts
 
             public GameSessionData()
             {
-                Enemies = new List<EnemyData>();
             }
+
+            public GameSessionData(Transform world, PoolManager enemyPoolManager)
+            {
+                World = new WorldData(world);
+                EnemyPoolManager = new EnemyPoolManager(enemyPoolManager);
+                Enemies = Enemy.enemies.Select(enemy => new EnemyData(enemy)).ToList();
+            }
+
+            /* Enemies = Enemy.enemies.Select(enemy => new EnemyData(enemy)).ToList(); ->
+             -> public EnemyData CreateEnemyData(Enemy enemy)
+            {
+                return new EnemyData(enemy);
+            }*/
         }
 
         [Serializable]
@@ -65,7 +78,7 @@ namespace _Scripts
             {
             }
 
-            public EnemyData(GameObject enemy)
+            public EnemyData(Enemy enemy)
             {
                 // Clean up the name to remove (Clone), (1), etc.
                 string cleanName = enemy.name.Replace("(Clone)", "");

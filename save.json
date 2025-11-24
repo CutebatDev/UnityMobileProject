@@ -4,7 +4,26 @@
     "WorldPositionY": 0.0,
     "WorldPositionZ": 0.0
   },
-  "Enemies": [],
+  "Enemies": [
+    {
+      "EnemyType": "Mosquito",
+      "EnemyPositionX": -4.99467039,
+      "EnemyPositionY": 0.5,
+      "EnemyPositionZ": -58.31262
+    },
+    {
+      "EnemyType": "Mosquito",
+      "EnemyPositionX": -7.51042652,
+      "EnemyPositionY": 0.5,
+      "EnemyPositionZ": -58.31262
+    },
+    {
+      "EnemyType": "Mosquito",
+      "EnemyPositionX": -13.4761333,
+      "EnemyPositionY": 0.5,
+      "EnemyPositionZ": -18.5420933
+    }
+  ],
   "EnemyPoolManager": {
     "PoolPositionX": 0.0,
     "PoolPositionY": 0.0,
