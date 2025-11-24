@@ -33,7 +33,7 @@ namespace _Scripts
             }
         }
 
-        public GameObject GetFromPool(GameObject prefab, SpawnManager owner, GameArea area, int layerIndex)
+        public GameObject GetFromPool(GameObject prefab) //SpawnManager owner, GameArea area, int layerIndex
         {
             if (!_pools.ContainsKey(prefab))
             {
@@ -48,10 +48,11 @@ namespace _Scripts
             }
 
             obj.SetActive(true);
-            foreach (var init in obj.GetComponentsInChildren<IPoolSpawnInit>(true))
-            {
-                init.OnSpawned(owner, area, layerIndex);
-            }
+            // foreach (var init in obj.GetComponentsInChildren<IPoolSpawnInit>(true))
+            // {
+            //     Debug.Log("THIS EXISTS");
+            //     init.OnSpawned(owner, area, layerIndex);
+            // }
 
             return obj;
         }

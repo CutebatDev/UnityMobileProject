@@ -21,7 +21,6 @@ namespace _Scripts
                 expManager = ExpManager.Instance;
             transformBack.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Screen.width);
             float currentPercent = (float)expManager.currentExp / expManager.requiredExp;
-            Debug.Log(currentPercent);
             transformFill.gameObject.GetComponent<Image>().fillAmount = currentPercent;
         }
     }

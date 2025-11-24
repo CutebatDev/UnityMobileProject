@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     
     [HideInInspector] public float speed = 1;
     [HideInInspector] public float damage = 2;
-    [HideInInspector] public float scoreReward = 10;
+    [HideInInspector] public int scoreReward = 10;
 
     private HealthManager _healthManager;
 
@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
             _healthManager.maxHealth =      enemyPreset.health * difficulty.enemyHealthModifier;
             speed =                         enemyPreset.speed * difficulty.enemySpeedModifier;
             damage =                        enemyPreset.damage * difficulty.enemyDamageModifier;
-            scoreReward =                   enemyPreset.scoreReward * difficulty.enemyScoreRewardModifier;
+            scoreReward =                   (int)(enemyPreset.scoreReward * difficulty.enemyScoreRewardModifier);
             transform.localScale =          Vector3.one * enemyPreset.sizeModifier;
         }
     }

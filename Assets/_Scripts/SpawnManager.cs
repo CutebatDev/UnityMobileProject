@@ -12,8 +12,11 @@ namespace _Scripts
         public int layerIndex;
         public LevelParameters levelParameters;
 
+        public static SpawnManager Instance;
+        
         void Start()
         {
+            Instance = this;
             StartCoroutine(SpawnPrefabs());
         }
 
@@ -26,7 +29,7 @@ namespace _Scripts
                 foreach (var prefab in prefabs)
                 {
                     Vector3 spawnPos = gameArea.GetSpawnPosition(layer);
-                    var obj = poolManager.GetFromPool(prefab, this, gameArea, layerIndex);
+                    var obj = poolManager.GetFromPool(prefab);
                     
                     if (obj.TryGetComponent(out Enemy mover))
                         InitializeEnemy(mover, spawnPos);
@@ -60,6 +63,7 @@ namespace _Scripts
             exp.expPreset = levelParameters.expPresets[rng];
             exp.UpdateToPreset();
             exp.transform.position = spawnPos;
+            
             exp.Initialize(this, gameArea, layerIndex);
         }
 

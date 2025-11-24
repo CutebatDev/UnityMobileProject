@@ -46,9 +46,12 @@ namespace _Scripts
                     }
                 }
             }
-            else if (other.gameObject.CompareTag("PlayerProjectile") || other.gameObject.CompareTag("Player")) // remove player collision later
+            else if (other.gameObject.CompareTag("PlayerProjectile"))
             {
-                TakeDamage(1);
+                if (other.TryGetComponent(out PlayerProjectileController component))
+                {
+                    TakeDamage(component.bulletDamage);
+                }
             }
         }
         private void TakeDamage(float damage)
@@ -62,12 +65,14 @@ namespace _Scripts
         {
             if (_isPlayer)
             {
-
+                // TODO GAMEOVER
                 Time.timeScale = 0;
             }
             else
             {
-                ScoreManager.Instance.AddScore(10);
+                gameObject.TryGetComponent(out Enemy enemy);
+                ScoreManager.Instance.AddScore(enemy.scoreReward);
+                ExpManager.Instance.AddExp(enemy.scoreReward);
                 PoolManager.Instance.ReturnToPool(gameObject);
             }
         }
