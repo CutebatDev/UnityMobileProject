@@ -67,14 +67,14 @@ namespace _Scripts
         public void SetSoundVolume(float volume)
         {
             CurrentSettings.soundVolume = Mathf.Clamp01(volume);
-            OnSoundVolumeChanged?.Invoke(CurrentSettings.soundVolume);
+            AudioManager.Instance.sfxVolume = volume;
             SaveSettings();
         }
 
         public void SetMusicVolume(float volume)
         {
             CurrentSettings.musicVolume = Mathf.Clamp01(volume);
-            OnMusicVolumeChanged?.Invoke(CurrentSettings.musicVolume);
+            AudioManager.Instance.musicVolume = volume;
             SaveSettings();
         }
 

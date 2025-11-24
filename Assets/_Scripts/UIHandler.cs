@@ -26,6 +26,8 @@ namespace _Scripts
 
         public void ContinueButton()
         {
+            AudioManager.Instance.PlaySFX(SFX.UI_Click);
+            AudioManager.Instance.PlayMusic(Music.Game);
             canvasInput.SetActive(true);
             canvasPauseMenu.SetActive(false);
             canvasLoadMenu.SetActive(false);
@@ -35,12 +37,14 @@ namespace _Scripts
 
         public void OptionsButton()
         {
+            AudioManager.Instance.PlaySFX(SFX.UI_Click);
             Debug.Log("Options Button");
             OpenSettings();
         }
 
         public void QuitButton()
         {
+            AudioManager.Instance.PlaySFX(SFX.UI_Click);
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
 #else
@@ -50,6 +54,8 @@ namespace _Scripts
 
         public void PauseButton()
         {
+            AudioManager.Instance.PlaySFX(SFX.UI_Click);
+            AudioManager.Instance.PlayMusic(Music.Menu);
             canvasInput.SetActive(false);
             canvasPauseMenu.SetActive(true);
             Time.timeScale = 0f;
@@ -57,6 +63,7 @@ namespace _Scripts
 
         private void OpenSettings()
         {
+            AudioManager.Instance.PlaySFX(SFX.UI_Click);
             if (_currentSettingsPanel == null && settingsPanel != null)
             {
                 // Instantiate under the "Canvases" parent (same level as UIHandler)
@@ -78,11 +85,13 @@ namespace _Scripts
 
         public void SaveButton()
         {
+            AudioManager.Instance.PlaySFX(SFX.UI_Click);
             OnSaveGame?.Invoke();
         }
 
         public void LoadButton()
         {
+            AudioManager.Instance.PlaySFX(SFX.UI_Click);
             gameOverPanel.SetActive(false);
             canvasPauseMenu.SetActive(false);
             canvasLoadMenu.SetActive(true);
@@ -91,6 +100,7 @@ namespace _Scripts
 
         public void GameOver()
         {
+            AudioManager.Instance.PlayMusic(Music.Menu);
             canvasInput.SetActive(false);
             gameOverPanel.SetActive(true);
             Time.timeScale = 0f;

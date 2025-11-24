@@ -56,6 +56,8 @@ namespace _Scripts
         }
         private void TakeDamage(float damage)
         {
+            if(_isPlayer)
+                AudioManager.Instance.PlaySFX(SFX.Player_Hurt);
             currentHealth -= damage;
             if (currentHealth <= 0) 
                 ObjectDeath();
@@ -69,6 +71,7 @@ namespace _Scripts
             }
             else
             {
+                AudioManager.Instance.PlaySFX(SFX.Enemy_Death);
                 gameObject.TryGetComponent(out Enemy enemy);
                 ScoreManager.Instance.AddScore(enemy.scoreReward);
                 ExpManager.Instance.AddExp(enemy.scoreReward);

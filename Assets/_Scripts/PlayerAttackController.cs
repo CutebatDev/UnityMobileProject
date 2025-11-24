@@ -58,6 +58,8 @@ namespace _Scripts
             bullet.transform.position = transform.position;
             bulletComponent.direction = (target.position - transform.position).normalized;
             bulletComponent.Initialize(gameArea, layerIndex);
+            
+            AudioManager.Instance.PlaySFX(SFX.Player_Shoot);
         }
 
         [CanBeNull]
