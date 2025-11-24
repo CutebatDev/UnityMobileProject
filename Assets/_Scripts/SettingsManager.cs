@@ -58,7 +58,9 @@ namespace _Scripts
         {
             // Trigger events to notify other systems
             OnSoundVolumeChanged?.Invoke(CurrentSettings.soundVolume);
+            SetSoundVolume(CurrentSettings.soundVolume);
             OnMusicVolumeChanged?.Invoke(CurrentSettings.musicVolume);
+            SetMusicVolume(CurrentSettings.musicVolume);
             OnJoystickSensitivityChanged?.Invoke(CurrentSettings.joystickSensitivity);
             OnOrientationAdaptationChanged?.Invoke(CurrentSettings.orientationAdaptationEnabled);
         }
