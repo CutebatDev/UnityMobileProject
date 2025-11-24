@@ -6,16 +6,21 @@ namespace _Scripts
 {
     public class UIHandler : MonoBehaviour
     {
+        [HideInInspector] public static UIHandler Instance;
+        
         [SerializeField] private GameObject canvasInput;
         [SerializeField] private GameObject canvasPauseMenu;
         [SerializeField] private GameObject canvasLoadMenu;
         [SerializeField] private GameObject canvasLoad;
-        [SerializeField] private GameObject settingsPanelPrefab; // Assign in inspector
+        [SerializeField] private GameObject settingsPanel;
+        [SerializeField] private GameObject gameOverPanel;
         private GameObject _currentSettingsPanel;
+        
         public event Action OnSaveGame;
 
         private void Start()
         {
+            Instance = this;
             ContinueButton();
         }
 
@@ -52,11 +57,11 @@ namespace _Scripts
 
         private void OpenSettings()
         {
-            if (_currentSettingsPanel == null && settingsPanelPrefab != null)
+            if (_currentSettingsPanel == null && settingsPanel != null)
             {
                 // Instantiate under the "Canvases" parent (same level as UIHandler)
                 // This will make it a sibling to the pause canvas
-                _currentSettingsPanel = Instantiate(settingsPanelPrefab, transform.parent);
+                _currentSettingsPanel = Instantiate(settingsPanel, transform.parent);
 
                 // Get the SettingsUI component and activate it
                 SettingsUI settingsUI = _currentSettingsPanel.GetComponent<SettingsUI>();
@@ -78,9 +83,17 @@ namespace _Scripts
 
         public void LoadButton()
         {
+            gameOverPanel.SetActive(false);
             canvasPauseMenu.SetActive(false);
             canvasLoadMenu.SetActive(true);
             canvasLoad.SetActive(true);
+        }
+
+        public void GameOver()
+        {
+            canvasInput.SetActive(false);
+            gameOverPanel.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 }
