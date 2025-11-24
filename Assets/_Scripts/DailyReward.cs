@@ -1,75 +1,108 @@
 using System;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Scripts
 {
     public class DailyReward : MonoBehaviour
     {
-        [SerializeField] private GameObject off;
-        [SerializeField] private GameObject ready;
-        [SerializeField] private GameObject on;
+        [System.Serializable]
+        private class RewardSlot
+        {
+            public GameObject offState;
+            public GameObject activeState;
+            public GameObject completedState;
+            public int dayState;
 
-        [SerializeField] private TextMeshProUGUI rewardAmountText;
-        [SerializeField] private TextMeshProUGUI dayNum;
-        [SerializeField] private int amountDays = 1;
+            public void SetState(int state)
+            {
+                offState.SetActive(state == 0);
+                activeState.SetActive(state == 1);
+                completedState.SetActive(state == 2);
+            }
+        }
 
-        private readonly System.DateTime _lastDayEntered = System.DateTime.Today;
-        private int today;
+        private const int REWARD_DAYS = 6;
+        private const string LAST_DATE_KEY = "LastDate";
+        private const string DAY_STATE_KEY = "Day_{0}";
 
-        private int _rewardAmount = 10;
-        private bool _isAvailable = false;
+        [SerializeField] private RewardSlot[] rewardSlots = new RewardSlot[REWARD_DAYS];
 
-        private int _coins = 0;
+        private int _lastDate;
 
         private void Start()
         {
-            off.SetActive(true);
-            ready.SetActive(false);
-            on.SetActive(false);
-
-            _rewardAmount *= amountDays;
-            rewardAmountText.text = _rewardAmount.ToString();
-            dayNum.text = "Day " + amountDays;
-
-            CheckDay();
-            SetRewardDay();
+            LoadData();
+            CheckDailyReset();
+            RefreshDisplay();
         }
 
-        private void CheckDay()
+        private void LoadData()
         {
-            today = System.DateTime.Today.Day;
-        }
+            _lastDate = PlayerPrefs.GetInt(LAST_DATE_KEY, 0);
 
-        private void SetRewardDay()
-        {
-            if (today == amountDays)
+            for (int i = 0; i < rewardSlots.Length; i++)
             {
-                _isAvailable = true;
-                off.SetActive(false);
-                ready.SetActive(true);
-                on.SetActive(false);
-            }
-            else
-            {
-                _isAvailable = false;
-                off.SetActive(true);
-                ready.SetActive(false);
-                on.SetActive(false);
+                int state = PlayerPrefs.GetInt(string.Format(DAY_STATE_KEY, i + 1), 0);
+                rewardSlots[i].dayState = state;
             }
         }
 
-        private void OnClicked()
+        private void CheckDailyReset()
         {
-            if (_isAvailable)
-            {
-                off.SetActive(false);
-                ready.SetActive(false);
-                on.SetActive(true);
+            if (_lastDate == DateTime.Now.Day)
+                return;
 
-                _coins += _rewardAmount;
+            _lastDate = DateTime.Now.Day;
+            PlayerPrefs.SetInt(LAST_DATE_KEY, _lastDate);
+
+            for (int i = 0; i < rewardSlots.Length; i++)
+            {
+                if (rewardSlots[i].dayState == 0)
+                {
+                    rewardSlots[i].dayState = 1;
+                    SaveState(i);
+                    break;
+                }
             }
         }
+
+        private void RefreshDisplay()
+        {
+            foreach (var slot in rewardSlots)
+                slot.SetState(slot.dayState);
+        }
+
+        public void ClaimReward(int rewardIndex)
+        {
+            if (!IsValidIndex(rewardIndex))
+            {
+                Debug.LogWarning($"Invalid reward index: {rewardIndex}");
+                return;
+            }
+
+            rewardSlots[rewardIndex].dayState = 2;
+            SaveState(rewardIndex);
+            RefreshDisplay();
+
+            Debug.Log($"Reward {rewardIndex + 1} claimed");
+        }
+
+        private void SaveState(int rewardIndex)
+        {
+            PlayerPrefs.SetInt(
+                string.Format(DAY_STATE_KEY, rewardIndex + 1),
+                rewardSlots[rewardIndex].dayState
+            );
+        }
+
+        private bool IsValidIndex(int index) => index >= 0 && index < rewardSlots.Length;
+
+        public void GetReward_1() => ClaimReward(0);
+        public void GetReward_2() => ClaimReward(1);
+        public void GetReward_3() => ClaimReward(2);
+        public void GetReward_4() => ClaimReward(3);
+        public void GetReward_5() => ClaimReward(4);
+        public void GetReward_6() => ClaimReward(5);
     }
 }
