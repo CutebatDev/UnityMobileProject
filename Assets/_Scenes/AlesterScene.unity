@@ -1819,8 +1819,8 @@ MonoBehaviour:
     distanceToCamera: 50
     padding: 0
     originalPadding: 0
-    minBounds: {x: -21.867233, y: -58.31262, z: 0}
-    maxBounds: {x: 21.867235, y: 58.312603, z: -0.0000076293945}
+    minBounds: {x: -21.856558, y: -58.31262, z: 0}
+    maxBounds: {x: 21.85656, y: 58.312603, z: -0.0000076293945}
   terrainPos: {fileID: 1142766304}
   leftBorder: 0.25
   bottomBorder: 0
