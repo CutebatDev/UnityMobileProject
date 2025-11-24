@@ -65,8 +65,7 @@ namespace _Scripts
         {
             if (_isPlayer)
             {
-                // TODO GAMEOVER
-                Time.timeScale = 0;
+                UIHandler.Instance.GameOver();
             }
             else
             {
