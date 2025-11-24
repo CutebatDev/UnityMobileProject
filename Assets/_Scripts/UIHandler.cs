@@ -8,11 +8,11 @@ namespace _Scripts
     {
         [SerializeField] private GameObject canvasInput;
         [SerializeField] private GameObject canvasPauseMenu;
-        [SerializeField] private GameObject settingsPanelPrefab; // Assign in inspector
         [SerializeField] private GameObject canvasLoadMenu;
-        private GameObject currentSettingsPanel;
+        [SerializeField] private GameObject canvasLoad;
+        [SerializeField] private GameObject settingsPanelPrefab; // Assign in inspector
+        private GameObject _currentSettingsPanel;
         public event Action OnSaveGame;
-        public event Action OnLoadGame;
 
         private void Start()
         {
@@ -23,6 +23,8 @@ namespace _Scripts
         {
             canvasInput.SetActive(true);
             canvasPauseMenu.SetActive(false);
+            canvasLoadMenu.SetActive(false);
+            canvasLoad.SetActive(false);
             Time.timeScale = 1f;
         }
 
@@ -50,22 +52,22 @@ namespace _Scripts
 
         private void OpenSettings()
         {
-            if (currentSettingsPanel == null && settingsPanelPrefab != null)
+            if (_currentSettingsPanel == null && settingsPanelPrefab != null)
             {
                 // Instantiate under the "Canvases" parent (same level as UIHandler)
                 // This will make it a sibling to the pause canvas
-                currentSettingsPanel = Instantiate(settingsPanelPrefab, transform.parent);
+                _currentSettingsPanel = Instantiate(settingsPanelPrefab, transform.parent);
 
                 // Get the SettingsUI component and activate it
-                SettingsUI settingsUI = currentSettingsPanel.GetComponent<SettingsUI>();
+                SettingsUI settingsUI = _currentSettingsPanel.GetComponent<SettingsUI>();
                 if (settingsUI != null)
                 {
                     settingsUI.OpenSettings();
                 }
             }
-            else if (currentSettingsPanel != null)
+            else if (_currentSettingsPanel != null)
             {
-                currentSettingsPanel.SetActive(true);
+                _currentSettingsPanel.SetActive(true);
             }
         }
 
@@ -76,14 +78,9 @@ namespace _Scripts
 
         public void LoadButton()
         {
-            //OnLoadGame?.Invoke();
-            OpenLoadMenu();
-        }
-
-        private void OpenLoadMenu()
-        {
             canvasPauseMenu.SetActive(false);
             canvasLoadMenu.SetActive(true);
+            canvasLoad.SetActive(true);
         }
     }
 }

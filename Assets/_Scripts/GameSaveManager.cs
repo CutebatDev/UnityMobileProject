@@ -11,10 +11,13 @@ namespace _Scripts
         [SerializeField] private Transform infiniteWorldTransform;
         [SerializeField] private PoolManager poolManager;
         [SerializeField] private GameObject poolPrefab;
+        [SerializeField] private int screenshotWidth = 512;
+        [SerializeField] private int screenshotHeight = 512;
 
         private SaveLoadSystem _saveLoadSystem;
         private const string SaveFileName = "save";
         private const string SaveFileExtension = ".json";
+        private const string ScreenshotExtension = ".jpeg";
 
         public static string SavePath =>
             Application.persistentDataPath + "/" + SaveFileName + saveIndex() + SaveFileExtension;
@@ -35,7 +38,6 @@ namespace _Scripts
             if (uiHandler != null)
             {
                 uiHandler.OnSaveGame += SaveGame;
-                uiHandler.OnLoadGame += LoadGame;
             }
         }
 
@@ -44,7 +46,6 @@ namespace _Scripts
             if (uiHandler != null)
             {
                 uiHandler.OnSaveGame -= SaveGame;
-                uiHandler.OnLoadGame -= LoadGame;
             }
         }
 
@@ -64,15 +65,58 @@ namespace _Scripts
             Debug.Log($"[SAVE DEBUG] PoolManager child count: {poolManager.transform.childCount}");
             Debug.Log($"[SAVE DEBUG] Found {sessionData.Enemies} Enemy components (including inactive)");
             Debug.Log($"[SAVE DEBUG] Total enemies saved to JSON: {sessionData.Enemies.Count}");
-            _saveLoadSystem.Save(sessionData, SavePath);
+
+            int index = saveIndex();
+            string savePath = Application.persistentDataPath + "/" + SaveFileName + index + SaveFileExtension;
+
+            _saveLoadSystem.Save(sessionData, savePath);
+            TakeAndSaveScreenshot(savePath);
             Debug.Log("Game saved!");
         }
 
-        private void LoadGame()
+        private void TakeAndSaveScreenshot(string jsonSavePath)
+        {
+            try
+            {
+                // Create a render texture
+                RenderTexture rt = new RenderTexture(screenshotWidth, screenshotHeight, 24);
+                Camera.main.targetTexture = rt;
+
+                // Render the camera to the texture
+                Camera.main.Render();
+
+                // Read the pixels from the render texture
+                RenderTexture.active = rt;
+                Texture2D screenshot = new Texture2D(screenshotWidth, screenshotHeight, TextureFormat.RGB24, false);
+                screenshot.ReadPixels(new Rect(0, 0, screenshotWidth, screenshotHeight), 0, 0);
+                screenshot.Apply();
+
+                // Clean up render texture
+                Camera.main.targetTexture = null;
+                RenderTexture.active = null;
+                Destroy(rt);
+
+                // Save as JPEG
+                byte[] bytes = ImageConversion.EncodeToJPG(screenshot);
+                string screenshotPath = jsonSavePath.Replace(SaveFileExtension, ScreenshotExtension);
+                File.WriteAllBytes(screenshotPath, bytes);
+
+                Debug.Log($"Screenshot saved to: {screenshotPath}");
+
+                // Clean up
+                Destroy(screenshot);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error taking screenshot: {e.Message}");
+            }
+        }
+
+        private void LoadGame(DataToSave.GameSessionData gameSessionData)
         {
             Debug.Log("Loading Game...");
 
-            var loadedData = _saveLoadSystem.Load<DataToSave.GameSessionData>(SavePath);
+            var loadedData = gameSessionData;
             if (loadedData == null)
             {
                 Debug.LogWarning("Save data not found or empty.");
@@ -161,6 +205,11 @@ namespace _Scripts
             Texture2D texture = new Texture2D(128, 128);
             texture.LoadImage(imageData);
             return Sprite.Create(texture, new Rect(0, 0, 128, 128), new Vector2(0, 0));
+        }
+
+        public void LoadSpecificSave(DataToSave.GameSessionData gameSessionData)
+        {
+            LoadGame(gameSessionData);
         }
     }
 }

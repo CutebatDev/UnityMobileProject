@@ -11,6 +11,12 @@ namespace _Scripts
 
         public void Initialize()
         {
+            if (gameSaveManager == null)
+            {
+                Debug.LogError("GameSaveManager is not assigned in the Inspector!");
+                return;
+            }
+
             if (loadFileUIHandlers == null)
             {
                 loadFileUIHandlers = new List<LoadFileUIHandler>();
