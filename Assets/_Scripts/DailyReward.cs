@@ -22,11 +22,12 @@ namespace _Scripts
             }
         }
 
+        [SerializeField] private RewardSlot[] rewardSlots = new RewardSlot[REWARD_DAYS];
         private const int REWARD_DAYS = 6;
         private const string LAST_DATE_KEY = "LastDate";
         private const string DAY_STATE_KEY = "Day_{0}";
+        public event Action<bool> OnRewardAvailabilityChanged;
 
-        [SerializeField] private RewardSlot[] rewardSlots = new RewardSlot[REWARD_DAYS];
 
         private int _lastDate;
 
@@ -35,6 +36,7 @@ namespace _Scripts
             LoadData();
             CheckDailyReset();
             RefreshDisplay();
+            CheckAndNotifyRewardAvailability();
         }
 
         private void LoadData()
@@ -71,6 +73,43 @@ namespace _Scripts
         {
             foreach (var slot in rewardSlots)
                 slot.SetState(slot.dayState);
+        }
+
+        private void CheckAndNotifyRewardAvailability()
+        {
+            bool hasRewardToday = HasAvailableReward();
+            OnRewardAvailabilityChanged?.Invoke(hasRewardToday);
+
+            if (hasRewardToday)
+            {
+                SendRewardNotification();
+            }
+        }
+
+        public bool HasAvailableReward()
+        {
+            foreach (var slot in rewardSlots)
+            {
+                if (slot.dayState == 1)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void SendRewardNotification()
+        {
+#if UNITY_ANDROID
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            {
+                AndroidJavaObject notification = new AndroidJavaObject(
+                    "android.app.Notification");
+
+                Debug.Log("Android notification sent: Daily reward available!");
+            }
+#elif UNITY_IOS
+            Debug.Log("iOS notification sent: Daily reward available!");
+#endif
         }
 
         public void ClaimReward(int rewardIndex)

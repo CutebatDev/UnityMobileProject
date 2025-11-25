@@ -7,21 +7,44 @@ namespace _Scripts
     public class UIHandler : MonoBehaviour
     {
         [HideInInspector] public static UIHandler Instance;
-        
+
         [SerializeField] private GameObject canvasInput;
         [SerializeField] private GameObject canvasPauseMenu;
         [SerializeField] private GameObject canvasLoadMenu;
-        [SerializeField] private GameObject canvasLoad;
+        [SerializeField] private GameObject canvasDailyBonus;
         [SerializeField] private GameObject settingsPanel;
         [SerializeField] private GameObject gameOverPanel;
+        [SerializeField] private DailyReward dailyReward;
         private GameObject _currentSettingsPanel;
-        
+
         public event Action OnSaveGame;
+
+        private void OnEnable()
+        {
+            dailyReward.OnRewardAvailabilityChanged += HandleRewardAvailabilityChanged;
+        }
+
+
+        private void OnDisable()
+        {
+            dailyReward.OnRewardAvailabilityChanged -= HandleRewardAvailabilityChanged;
+        }
+
+        private void HandleRewardAvailabilityChanged(bool isAvailable)
+        {
+            canvasDailyBonus.SetActive(isAvailable);
+            Time.timeScale = 0f;
+        }
+
+
+        private void Awake()
+        {
+            ContinueButton();
+        }
 
         private void Start()
         {
             Instance = this;
-            ContinueButton();
         }
 
         public void ContinueButton()
@@ -31,7 +54,8 @@ namespace _Scripts
             canvasInput.SetActive(true);
             canvasPauseMenu.SetActive(false);
             canvasLoadMenu.SetActive(false);
-            canvasLoad.SetActive(false);
+            canvasDailyBonus.SetActive(false);
+
             Time.timeScale = 1f;
         }
 
@@ -95,7 +119,6 @@ namespace _Scripts
             gameOverPanel.SetActive(false);
             canvasPauseMenu.SetActive(false);
             canvasLoadMenu.SetActive(true);
-            canvasLoad.SetActive(true);
         }
 
         public void GameOver()
