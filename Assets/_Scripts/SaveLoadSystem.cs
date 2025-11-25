@@ -18,6 +18,7 @@ namespace _Scripts
         {
             string jsonString = JsonConvert.SerializeObject(objectToSave, _jsonSettings);
             File.WriteAllText(fileName, jsonString);
+            AnalyticsManager.Instance.GameSavedCustomEvent();
             Debug.Log("Data: " + jsonString + "\nPath: " + fileName);
         }
 
