@@ -33,7 +33,11 @@ namespace _Scripts
         private void HandleRewardAvailabilityChanged(bool isAvailable)
         {
             canvasDailyBonus.SetActive(isAvailable);
-            Time.timeScale = 0f;
+
+            if (isAvailable)
+            {
+                Time.timeScale = 0f;
+            }
         }
 
 
